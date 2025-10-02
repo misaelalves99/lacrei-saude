@@ -17,12 +17,16 @@ export const Hero: React.FC = () => {
       </Subtitle>
       <Actions>
         <AccessibleButton
+          label="Começar agora"
+          onClick={() => router.push("/servicos")}
+        />
+        <AccessibleButton
           label="Saiba mais"
           onClick={() => router.push("/sobre")}
         />
         <AccessibleButton
-          label="Começar agora"
-          onClick={() => router.push("/servicos")}
+          label="Contato"
+          onClick={() => router.push("/contato")}
         />
       </Actions>
     </HeroWrapper>

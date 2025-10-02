@@ -1,8 +1,8 @@
-// src/components/Header/UserPanelLazy.tsx
+// src/components/layout/UserPanelLazy.tsx
 "use client";
 
 import Link from "next/link";
-import * as S from "./Header.styles";
+import { UserPanelContainer, UserPanelLink } from "./UserPanelLazy.styles";
 
 interface Props {
   onClose: () => void;
@@ -10,13 +10,13 @@ interface Props {
 
 export default function UserPanelLazy({ onClose }: Props) {
   return (
-    <S.UserPanel role="menu" aria-label="Opções do usuário">
+    <UserPanelContainer role="menu" aria-label="Opções do usuário">
       <Link href="/login" passHref legacyBehavior>
-        <S.NavLink onClick={onClose}>Login</S.NavLink>
+        <UserPanelLink onClick={onClose}>Login</UserPanelLink>
       </Link>
       <Link href="/register" passHref legacyBehavior>
-        <S.NavLink onClick={onClose}>Cadastrar</S.NavLink>
+        <UserPanelLink onClick={onClose}>Cadastrar</UserPanelLink>
       </Link>
-    </S.UserPanel>
+    </UserPanelContainer>
   );
 }
