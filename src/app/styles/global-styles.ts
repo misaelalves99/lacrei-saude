@@ -1,13 +1,12 @@
 // src/styles/global-styles.ts
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-  /* Import da fonte Nunito do Google Fonts */
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
-
   :root {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    font-size: 100%;
   }
 
   html, body, #__next {
@@ -19,14 +18,11 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${({ theme }) => theme.fonts.body};
     background: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: ${({ theme }) => theme.fonts.heading};
-    margin: 0;
+  main {
+    outline: none;
   }
 
   a {
@@ -34,13 +30,28 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
-  img {
+  img, svg {
     max-width: 100%;
     height: auto;
     display: block;
   }
 
-  *, *::before, *::after {
+  * {
     box-sizing: border-box;
+  }
+
+  /* Melhor foco visível */
+  :focus {
+    outline: 3px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 2px;
+  }
+
+  /* Respeita prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
   }
 `;

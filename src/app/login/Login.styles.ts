@@ -5,21 +5,25 @@ export const AuthWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4rem 1rem;
-  min-height: calc(100vh - 160px); // header + footer
+  padding: 2rem 1rem;
+  min-height: calc(100vh - 160px);
   background: ${({ theme }) => theme.colors.backgroundGradient};
 `;
 
 export const AuthCard = styled.div`
   background: ${({ theme }) => theme.colors.background};
   border-radius: ${({ theme }) => theme.radius.lg};
-  padding: 3rem 2rem;
-  max-width: 400px;
+  padding: 2.5rem 2rem;
   width: 100%;
+  max-width: 400px;
   box-shadow: 0 8px 28px rgba(2, 6, 23, 0.1);
+
+  @media (max-width: 480px) {
+    padding: 2rem 1.25rem;
+  }
 `;
 
-export const Title = styled.h2`
+export const Title = styled.h1`
   font-size: 1.75rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.primaryDark};
@@ -50,7 +54,7 @@ export const Input = styled.input`
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 0 3px rgba(1, 131, 131, 0.2);
+    box-shadow: 0 0 0 3px rgba(1, 131, 131, 0.3);
   }
 `;
 
@@ -64,7 +68,8 @@ export const Button = styled.button`
   cursor: pointer;
   transition: background 0.3s ease;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background: ${({ theme }) => theme.colors.primaryDark};
   }
 
@@ -78,14 +83,28 @@ export const LinkText = styled.p`
   font-size: 0.9rem;
   text-align: center;
   color: ${({ theme }) => theme.colors.text};
+  margin-top: 1.5rem;
 
   a {
     color: ${({ theme }) => theme.colors.primary};
     font-weight: 600;
     text-decoration: none;
 
-    &:hover {
+    &:hover,
+    &:focus-visible {
       text-decoration: underline;
     }
   }
+`;
+
+/* Classe utilitária para acessibilidade (esconde label visual mas mantém no leitor de tela) */
+export const SrOnly = styled.span`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 `;

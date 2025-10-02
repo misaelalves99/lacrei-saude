@@ -19,8 +19,12 @@ export const ContactForm: React.FC = () => {
   };
 
   return (
-    <S.Form onSubmit={handleSubmit}>
-      {success && <S.SuccessMessage>Mensagem enviada com sucesso!</S.SuccessMessage>}
+    <S.Form onSubmit={handleSubmit} aria-label="Formulário de contato da Lacrei Saúde">
+      {success && (
+        <S.SuccessMessage role="status" aria-live="polite">
+          ✅ Mensagem enviada com sucesso!
+        </S.SuccessMessage>
+      )}
 
       <S.Label htmlFor="name">Nome</S.Label>
       <S.Input
@@ -31,6 +35,7 @@ export const ContactForm: React.FC = () => {
         value={formData.name}
         onChange={handleChange}
         required
+        aria-required="true"
       />
 
       <S.Label htmlFor="email">E-mail</S.Label>
@@ -42,6 +47,7 @@ export const ContactForm: React.FC = () => {
         value={formData.email}
         onChange={handleChange}
         required
+        aria-required="true"
       />
 
       <S.Label htmlFor="message">Mensagem</S.Label>
@@ -53,6 +59,7 @@ export const ContactForm: React.FC = () => {
         onChange={handleChange}
         required
         rows={6}
+        aria-required="true"
       />
 
       <S.SubmitButton type="submit">Enviar</S.SubmitButton>

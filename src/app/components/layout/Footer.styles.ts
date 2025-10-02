@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 export const FooterContainer = styled.footer`
-  padding: 2.5rem 1rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 1rem;
   background: ${({ theme }) => theme.colors.white};
   border-top: 2px solid ${({ theme }) => theme.colors.primary};
 `;
@@ -30,7 +30,7 @@ export const Column = styled.div`
 export const Brand = styled.h2`
   font-family: ${({ theme }) => theme.fonts.heading};
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
   margin: 0;
   color: ${({ theme }) => theme.colors.primaryDark};
 `;
@@ -39,7 +39,7 @@ export const Tagline = styled.p`
   margin-top: 0.5rem;
   color: ${({ theme }) => theme.colors.text};
   opacity: 0.75;
-  font-size: 0.95rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
 `;
 
 export const List = styled.ul`
@@ -61,7 +61,7 @@ export const FooterLink = styled.a`
   transition: color 0.2s ease, background 0.2s ease;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     color: ${({ theme }) => theme.colors.primaryDark};
     background: rgba(1, 131, 131, 0.08);
     outline: none;

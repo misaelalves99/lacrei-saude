@@ -1,4 +1,3 @@
-// src/app/servicos/page.tsx
 "use client";
 
 import React from "react";
@@ -35,7 +34,7 @@ const SERVICES = [
 
 export default function ServicesPage() {
   return (
-    <>
+    <main id="main-content">
       <HeroWrapper>
         <Title>Nossos Serviços</Title>
         <Subtitle>
@@ -43,10 +42,15 @@ export default function ServicesPage() {
         </Subtitle>
       </HeroWrapper>
 
-      <S.Section>
+      <S.Section aria-labelledby="services-title">
+        <S.SectionTitle id="services-title">Serviços Disponíveis</S.SectionTitle>
+        <S.SectionSubtitle>
+          Descubra como podemos apoiar sua saúde com cuidado e profissionalismo.
+        </S.SectionSubtitle>
+
         <S.ServicesGrid>
           {SERVICES.map((service) => (
-            <S.ServiceCard key={service.title}>
+            <S.ServiceCard key={service.title} role="article">
               <S.ServiceTitle>{service.title}</S.ServiceTitle>
               <S.ServiceDescription>{service.description}</S.ServiceDescription>
             </S.ServiceCard>
@@ -55,6 +59,6 @@ export default function ServicesPage() {
       </S.Section>
 
       <CTASection />
-    </>
+    </main>
   );
 }

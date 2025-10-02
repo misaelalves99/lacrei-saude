@@ -12,37 +12,51 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(`Login: ${email}`);
-    // Aqui você chamaria API de autenticação real
   };
 
   return (
-    <S.AuthWrapper>
-      <S.AuthCard>
-        <S.Title>Entrar</S.Title>
-        <S.Subtitle>Acesse sua conta Lacrei Saúde</S.Subtitle>
+    <main id="main-content">
+      <S.AuthWrapper>
+        <S.AuthCard role="form" aria-labelledby="login-title">
+          <S.Title id="login-title">Entrar</S.Title>
+          <S.Subtitle>Acesse sua conta Lacrei Saúde</S.Subtitle>
 
-        <S.Form onSubmit={handleSubmit}>
-          <S.Input
-            type="email"
-            placeholder="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <S.Input
-            type="password"
-            placeholder="Senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <S.Button type="submit">Entrar</S.Button>
-        </S.Form>
+          <S.Form onSubmit={handleSubmit}>
+            <label htmlFor="email" className="sr-only">E-mail</label>
+            <S.Input
+              id="email"
+              type="email"
+              placeholder="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              aria-required="true"
+            />
 
-        <S.LinkText>
-          Não tem conta? <Link href="/register">Cadastre-se</Link>
-        </S.LinkText>
-      </S.AuthCard>
-    </S.AuthWrapper>
+            <label htmlFor="password" className="sr-only">Senha</label>
+            <S.Input
+              id="password"
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              aria-required="true"
+            />
+
+            <S.Button type="submit" aria-label="Entrar na conta">
+              Entrar
+            </S.Button>
+          </S.Form>
+
+          <S.LinkText>
+            Não tem conta?{" "}
+            <Link href="/register" aria-label="Ir para página de cadastro">
+              Cadastre-se
+            </Link>
+          </S.LinkText>
+        </S.AuthCard>
+      </S.AuthWrapper>
+    </main>
   );
 }

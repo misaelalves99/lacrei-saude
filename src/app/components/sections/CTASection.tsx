@@ -1,5 +1,6 @@
 // src/components/sections/CTASection.tsx
 "use client";
+
 import React from "react";
 import { useRouter } from "next/navigation";
 import { CTAWrapper, Title, Action } from "./CTASection.styles";
@@ -9,12 +10,12 @@ export const CTASection: React.FC = () => {
   const router = useRouter();
 
   return (
-    <CTAWrapper>
-      <Title>Pronto para dar o próximo passo?</Title>
+    <CTAWrapper role="region" aria-labelledby="cta-title">
+      <Title id="cta-title">Pronto para dar o próximo passo?</Title>
       <Action>
-        <AccessibleButton 
-          label="Criar conta" 
-          onClick={() => router.push("/register")} 
+        <AccessibleButton
+          label="Criar conta"
+          onClick={() => router.push("/register")}
         />
       </Action>
     </CTAWrapper>

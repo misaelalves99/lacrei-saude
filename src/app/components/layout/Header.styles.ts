@@ -1,12 +1,11 @@
-// src/components/layout/Header.styles.ts
 import styled from "styled-components";
 
-// 🔹 Header principal
+// Container principal
 export const HeaderContainer = styled.header`
   display: flex;
-  align-items: center;
+  align-items: center;      /* Alinha verticalmente todos os itens */
   justify-content: space-between;
-  padding: 0.875rem 1rem;
+  padding: clamp(0.75rem, 2vw, 1rem) 1rem;
   background: ${({ theme }) => theme.colors.white};
   border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
   position: sticky;
@@ -14,25 +13,27 @@ export const HeaderContainer = styled.header`
   z-index: 100;
 `;
 
-// 🔹 Marca (logo + nome)
+// Logo e marca
 export const Brand = styled.div`
   display: flex;
-  align-items: center;
+  align-items: center;      /* Alinha verticalmente logo e texto */
   gap: 0.75rem;
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
   color: ${({ theme }) => theme.colors.primaryDark};
 `;
 
-// 🔹 Navegação desktop
+// Navegação Desktop
 export const Nav = styled.nav`
   display: flex;
-  align-items: center;
+  align-items: center;      /* Alinha links e ícone de usuário verticalmente */
   gap: 1rem;
 `;
 
+// Lista desktop
 export const DesktopList = styled.ul`
   display: flex;
+  align-items: center;      /* Centraliza verticalmente cada <li> */
   gap: 1rem;
   list-style: none;
   margin: 0;
@@ -43,7 +44,11 @@ export const DesktopList = styled.ul`
   }
 `;
 
-export const NavItem = styled.li``;
+export const NavItem = styled.li`
+  display: flex;
+  align-items: center;      /* Garante alinhamento vertical dos links e botões */
+  position: relative;
+`;
 
 export const NavLink = styled.a`
   font-weight: 600;
@@ -54,14 +59,14 @@ export const NavLink = styled.a`
   color: ${({ theme }) => theme.colors.text};
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     background: rgba(1, 131, 131, 0.1);
     color: ${({ theme }) => theme.colors.primaryDark};
     outline: none;
   }
 `;
 
-// 🔹 Botão mobile
+// Botão Mobile
 export const MenuButton = styled.button`
   background: transparent;
   border: none;
@@ -71,10 +76,12 @@ export const MenuButton = styled.button`
   padding: 0.5rem;
   border-radius: 6px;
   color: ${({ theme }) => theme.colors.primaryDark};
+  transition: background 0.2s ease;
 
-  &:focus {
+  &:hover,
+  &:focus-visible {
+    background: rgba(1, 131, 131, 0.1);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(1, 131, 131, 0.35);
   }
 
   @media (min-width: 769px) {
@@ -82,7 +89,7 @@ export const MenuButton = styled.button`
   }
 `;
 
-// 🔹 Painel mobile (hamburger menu aberto)
+// Painel Mobile
 export const MobilePanel = styled.div<{ open: boolean }>`
   position: absolute;
   right: 1rem;
@@ -94,6 +101,7 @@ export const MobilePanel = styled.div<{ open: boolean }>`
   display: ${({ open }) => (open ? "flex" : "none")};
   flex-direction: column;
   gap: 0.5rem;
+  z-index: 120;
 
   a {
     padding: 0.5rem 0.75rem;
@@ -104,7 +112,7 @@ export const MobilePanel = styled.div<{ open: boolean }>`
     transition: background 0.2s ease, color 0.2s ease;
 
     &:hover,
-    &:focus {
+    &:focus-visible {
       background: rgba(1, 131, 131, 0.1);
       color: ${({ theme }) => theme.colors.primaryDark};
       outline: none;
@@ -113,5 +121,55 @@ export const MobilePanel = styled.div<{ open: boolean }>`
 
   @media (min-width: 769px) {
     display: none;
+  }
+`;
+
+// Ícone de usuário
+export const UserButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  color: ${({ theme }) => theme.colors.primaryDark};
+  display: flex;
+  align-items: center;      /* centraliza o ícone verticalmente */
+  transition: background 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(1, 131, 131, 0.1);
+    outline: none;
+  }
+`;
+
+// Painel modal do usuário
+export const UserPanel = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.radius.md};
+  box-shadow: 0 8px 28px rgba(2, 6, 23, 0.12);
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  z-index: 150;
+
+  a {
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    color: ${({ theme }) => theme.colors.text};
+    transition: background 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: rgba(1, 131, 131, 0.1);
+      color: ${({ theme }) => theme.colors.primaryDark};
+      outline: none;
+    }
   }
 `;

@@ -2,12 +2,12 @@
 
 "use client";
 
-import React from 'react'
-import Link from 'next/link'
-import * as S from './Footer.styles'
+import React from "react";
+import Link from "next/link";
+import * as S from "./Footer.styles";
 
 export default function Footer() {
-  const year = new Date().getFullYear()
+  const year = new Date().getFullYear();
 
   return (
     <S.FooterContainer role="contentinfo" aria-label="Rodapé da Lacrei Saúde">
@@ -40,9 +40,11 @@ export default function Footer() {
         </S.Column>
 
         <S.Column>
-          <S.Legal>© {year} Lacrei Saúde — Todos os direitos reservados.</S.Legal>
+          <S.Legal role="contentinfo">
+            © {year} Lacrei Saúde — Todos os direitos reservados.
+          </S.Legal>
         </S.Column>
       </S.FooterInner>
     </S.FooterContainer>
-  )
+  );
 }
