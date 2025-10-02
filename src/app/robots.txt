@@ -1,0 +1,6 @@
+# src/app/robots.txt
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.lacreisaude.com/sitemap.xml
