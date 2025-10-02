@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-// Container geral da seção
+// Container geral da seção de serviços
 export const Section = styled.section`
   padding: 4rem 1rem;
   max-width: 1100px;
@@ -83,4 +83,67 @@ export const ServiceDescription = styled.p`
   font-size: 1rem;
   color: ${({ theme }) => theme.colors.text};
   line-height: 1.5;
+`;
+
+/* -------------------------------------------
+   Hero da página de Serviços (imagem + texto)
+------------------------------------------- */
+
+export const HeroWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 4rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    text-align: left;
+    gap: 4rem;
+    padding: 6rem 2rem;
+  }
+`;
+
+export const HeroContent = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
+`;
+
+export const HeroText = styled.div`
+  max-width: 600px;
+`;
+
+export const TitleHero = styled.h1`
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: ${({ theme }) => theme.colors.primaryDark};
+  line-height: 1.2;
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 3.5rem;
+  }
+`;
+
+export const SubtitleHero = styled.p`
+  font-size: 1.125rem;
+  color: ${({ theme }) => theme.colors.gray};
+  line-height: 1.6;
+
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+  }
 `;

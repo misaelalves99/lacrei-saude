@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import * as S from "./Header.styles";
 
 const NAV_LINKS = [
@@ -12,7 +13,10 @@ const NAV_LINKS = [
   { href: "/contato", label: "Contato" },
 ];
 
-export default function Header() {
+// Lazy load do painel de usuário
+const UserPanelLazy = dynamic(() => import("./UserPanelLazy"), { ssr: false });
+
+function HeaderComponent() {
   const [openMenu, setOpenMenu] = useState(false);
   const [openUser, setOpenUser] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -32,6 +36,7 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handleOutside);
   }, [openMenu, openUser]);
 
+  // Fecha menus com Esc
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -45,12 +50,14 @@ export default function Header() {
 
   return (
     <S.HeaderContainer role="banner" aria-label="Cabeçalho da Lacrei Saúde">
+      {/* Logo */}
       <S.Brand>
         <Link href="/" aria-label="Lacrei Saúde — Início">
           <Image src="/logo.svg" alt="Lacrei Saúde" width={140} height={36} priority />
         </Link>
       </S.Brand>
 
+      {/* Navegação */}
       <S.Nav aria-label="Navegação principal">
         {/* Links desktop */}
         <S.DesktopList role="menubar">
@@ -64,7 +71,7 @@ export default function Header() {
 
           {/* Ícone de usuário */}
           <S.NavItem style={{ position: "relative" }}>
-            <div ref={userRef} style={{ position: "relative" }}>
+            <div ref={userRef}>
               <S.UserButton
                 aria-label="Menu do usuário"
                 aria-haspopup="true"
@@ -79,16 +86,7 @@ export default function Header() {
                 </svg>
               </S.UserButton>
 
-              {openUser && (
-                <S.UserPanel role="menu" aria-label="Opções do usuário">
-                  <Link href="/login" passHref legacyBehavior>
-                    <S.NavLink onClick={() => setOpenUser(false)}>Login</S.NavLink>
-                  </Link>
-                  <Link href="/register" passHref legacyBehavior>
-                    <S.NavLink onClick={() => setOpenUser(false)}>Cadastrar</S.NavLink>
-                  </Link>
-                </S.UserPanel>
-              )}
+              {openUser && <UserPanelLazy onClose={() => setOpenUser(false)} />}
             </div>
           </S.NavItem>
         </S.DesktopList>
@@ -105,14 +103,13 @@ export default function Header() {
           </svg>
         </S.MenuButton>
 
+        {/* Menu mobile */}
         <S.MobilePanel id="mobile-menu" role="menu" aria-label="Menu móvel" open={openMenu} ref={menuRef}>
           {NAV_LINKS.map((link) => (
             <Link key={link.href} href={link.href} role="menuitem" passHref legacyBehavior>
               <S.NavLink onClick={() => setOpenMenu(false)}>{link.label}</S.NavLink>
             </Link>
           ))}
-
-          {/* Mobile user links */}
           <Link href="/login" passHref legacyBehavior>
             <S.NavLink onClick={() => setOpenMenu(false)}>Login</S.NavLink>
           </Link>
@@ -124,3 +121,6 @@ export default function Header() {
     </S.HeaderContainer>
   );
 }
+
+// Memoiza o Header
+export default memo(HeaderComponent);

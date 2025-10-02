@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
-// Container principal
 export const HeaderContainer = styled.header`
   display: flex;
-  align-items: center;      /* Alinha verticalmente todos os itens */
+  align-items: center;      
   justify-content: space-between;
   padding: clamp(0.75rem, 2vw, 1rem) 1rem;
   background: ${({ theme }) => theme.colors.white};
@@ -13,27 +12,24 @@ export const HeaderContainer = styled.header`
   z-index: 100;
 `;
 
-// Logo e marca
 export const Brand = styled.div`
   display: flex;
-  align-items: center;      /* Alinha verticalmente logo e texto */
+  align-items: center;      
   gap: 0.75rem;
   font-weight: 700;
   font-size: clamp(1.1rem, 2vw, 1.25rem);
   color: ${({ theme }) => theme.colors.primaryDark};
 `;
 
-// Navegação Desktop
 export const Nav = styled.nav`
   display: flex;
-  align-items: center;      /* Alinha links e ícone de usuário verticalmente */
+  align-items: center;      
   gap: 1rem;
 `;
 
-// Lista desktop
 export const DesktopList = styled.ul`
   display: flex;
-  align-items: center;      /* Centraliza verticalmente cada <li> */
+  align-items: center;
   gap: 1rem;
   list-style: none;
   margin: 0;
@@ -46,7 +42,7 @@ export const DesktopList = styled.ul`
 
 export const NavItem = styled.li`
   display: flex;
-  align-items: center;      /* Garante alinhamento vertical dos links e botões */
+  align-items: center;      
   position: relative;
 `;
 
@@ -66,7 +62,6 @@ export const NavLink = styled.a`
   }
 `;
 
-// Botão Mobile
 export const MenuButton = styled.button`
   background: transparent;
   border: none;
@@ -89,7 +84,6 @@ export const MenuButton = styled.button`
   }
 `;
 
-// Painel Mobile
 export const MobilePanel = styled.div<{ open: boolean }>`
   position: absolute;
   right: 1rem;
@@ -124,7 +118,6 @@ export const MobilePanel = styled.div<{ open: boolean }>`
   }
 `;
 
-// Ícone de usuário
 export const UserButton = styled.button`
   background: transparent;
   border: none;
@@ -133,7 +126,7 @@ export const UserButton = styled.button`
   border-radius: 6px;
   color: ${({ theme }) => theme.colors.primaryDark};
   display: flex;
-  align-items: center;      /* centraliza o ícone verticalmente */
+  align-items: center;      
   transition: background 0.2s ease;
 
   &:hover,
@@ -143,7 +136,6 @@ export const UserButton = styled.button`
   }
 `;
 
-// Painel modal do usuário
 export const UserPanel = styled.div`
   position: absolute;
   top: 100%;
