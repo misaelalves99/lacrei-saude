@@ -1,7 +1,6 @@
 // src/components/sections/Hero.tsx
 
 "use client";
-
 import React from "react";
 import { HeroWrapper, Title, Subtitle, Actions } from "./Hero.styles";
 import { AccessibleButton } from "../ui/AccessibleButton";

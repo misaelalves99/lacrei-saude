@@ -1,5 +1,7 @@
 // src/components/layout/Footer.tsx
 
+"use client";
+
 import React from 'react'
 import Link from 'next/link'
 import * as S from './Footer.styles'

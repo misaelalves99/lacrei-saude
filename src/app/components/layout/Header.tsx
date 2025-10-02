@@ -7,10 +7,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import * as S from './Header.styles'
 
+// Adicionando Home, Serviços, Sobre, Contato, Login e Register
 const NAV_LINKS = [
+  { href: '/', label: 'Home' },
   { href: '/servicos', label: 'Serviços' },
   { href: '/sobre', label: 'Sobre' },
   { href: '/contato', label: 'Contato' },
+  { href: '/login', label: 'Login' },
+  { href: '/register', label: 'Cadastrar' },
 ]
 
 export default function Header() {

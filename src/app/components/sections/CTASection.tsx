@@ -1,7 +1,6 @@
 // src/components/sections/CTASection.tsx
 
 "use client";
-
 import React from "react";
 import { CTAWrapper, Title, Action } from "./CTASection.styles";
 import { AccessibleButton } from "../ui/AccessibleButton";
