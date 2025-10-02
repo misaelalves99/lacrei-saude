@@ -53,7 +53,14 @@ function HeaderComponent() {
       {/* Logo */}
       <S.Brand>
         <Link href="/" aria-label="Lacrei Saúde — Início">
-          <Image src="/logo.svg" alt="Lacrei Saúde" width={140} height={36} priority />
+          <Image
+            src="/assets/logo.svg"
+            alt="Lacrei Saúde"
+            width={140}
+            height={36}
+            style={{ width: "140px", height: "36px" }}
+            priority
+          />
         </Link>
       </S.Brand>
 
