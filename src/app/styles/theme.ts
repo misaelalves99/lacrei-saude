@@ -3,11 +3,11 @@ import { DefaultTheme } from "styled-components";
 
 export const theme: DefaultTheme = {
   colors: {
-    primary: "#018383", // verde-água principal
-    primaryDark: "#014687", // azul profundo secundário
+    primary: "#018383",
+    primaryDark: "#014687",
     background: "#FFFFFF",
     backgroundGradient: "linear-gradient(180deg, #F0FDFD 0%, #E6F4F1 100%)",
-    text: "#1F2937", // cinza escuro, acessível
+    text: "#1F2937",
     white: "#FFFFFF",
     gray: "#6B7280",
     grayLight: "#F9FAFB",
@@ -19,7 +19,7 @@ export const theme: DefaultTheme = {
     full: "9999px",
   },
   fonts: {
-    body: '"Inter", system-ui, sans-serif',
-    heading: '"Inter", system-ui, sans-serif',
+    body: "'Nunito', system-ui, sans-serif",
+    heading: "'Nunito', system-ui, sans-serif",
   },
 };

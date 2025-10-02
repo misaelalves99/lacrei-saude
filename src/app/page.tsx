@@ -1,16 +1,15 @@
-// src/app/page.tsx
+// src/pages/_app.tsx
 
-"use client";
+import type { AppProps } from "next/app";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyle } from "./styles/global-styles";
+import { theme } from "./styles/theme";
 
-import React from "react";
-import { Hero } from "./components/sections/Hero";
-import { CTASection } from "./components/sections/CTASection";
-
-export default function HomePage() {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <Hero />
-      <CTASection />
-    </>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </ThemeProvider>
   );
 }
