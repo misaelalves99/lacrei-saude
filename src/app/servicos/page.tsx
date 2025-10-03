@@ -3,17 +3,9 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { CTASection } from "../components/sections/CTASection";
 import * as S from "./Servicos.styles";
-
-// IMPORTAR AQUI OS ESTILOS DO HERO DA PÁGINA DE SERVIÇOS
-import {
-  HeroWrapper,
-  HeroContent,
-  HeroText,
-  TitleHero as Title,
-  SubtitleHero as Subtitle,
-} from "./Servicos.styles";
 
 const SERVICES = [
   {
@@ -52,7 +44,7 @@ export default function ServicesPage() {
   return (
     <main id="main-content">
       {/* Hero com imagem à esquerda e texto à direita */}
-      <HeroWrapper role="region" aria-labelledby="hero-title">
+      <S.HeroWrapper role="region" aria-labelledby="hero-title">
         <Image
           src="https://cdn.pixabay.com/photo/2024/02/16/06/26/dentist-8576790_1280.png"
           alt="Profissional de saúde atendendo paciente"
@@ -62,16 +54,16 @@ export default function ServicesPage() {
           loading="lazy"
         />
 
-        <HeroContent>
-          <HeroText>
-            <Title id="hero-title">Nossos Serviços</Title>
-            <Subtitle>
+        <S.HeroContent>
+          <S.HeroText>
+            <S.TitleHero id="hero-title">Nossos Serviços</S.TitleHero>
+            <S.SubtitleHero>
               Oferecemos soluções de saúde inclusivas, seguras e acessíveis,
               pensadas para cada pessoa.
-            </Subtitle>
-          </HeroText>
-        </HeroContent>
-      </HeroWrapper>
+            </S.SubtitleHero>
+          </S.HeroText>
+        </S.HeroContent>
+      </S.HeroWrapper>
 
       <S.Section aria-labelledby="services-title">
         <S.SectionTitle id="services-title">Serviços Disponíveis</S.SectionTitle>
@@ -84,6 +76,9 @@ export default function ServicesPage() {
             <S.ServiceCard key={service.title} role="article">
               <S.ServiceTitle>{service.title}</S.ServiceTitle>
               <S.ServiceDescription>{service.description}</S.ServiceDescription>
+              <Link href="/" passHref legacyBehavior>
+                <S.CardButton as="a">Saiba mais</S.CardButton>
+              </Link>
             </S.ServiceCard>
           ))}
         </S.ServicesGrid>

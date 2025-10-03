@@ -1,3 +1,4 @@
+// src/app/sobre/Sobre.styles.ts
 import styled from "styled-components";
 
 // Container de seção
@@ -38,7 +39,49 @@ export const SectionText = styled.p`
   }
 `;
 
-// Grid responsivo de valores
+/* ----------------------------
+   Grid da Missão
+----------------------------- */
+export const MissionGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+`;
+
+export const MissionCard = styled.div`
+  background: ${({ theme }) => theme.colors.backgroundGradient};
+  border-radius: ${({ theme }) => theme.radius.md};
+  padding: 2rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(1, 131, 131, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(1, 131, 131, 0.15);
+  }
+`;
+
+export const MissionText = styled.p`
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.text};
+  line-height: 1.4;
+`;
+
+/* ----------------------------
+   Grid de Valores
+----------------------------- */
 export const ValuesGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -54,7 +97,6 @@ export const ValuesGrid = styled.div`
   }
 `;
 
-// Card individual de valor
 export const ValueCard = styled.article`
   background: ${({ theme }) => theme.colors.backgroundGradient};
   border-radius: ${({ theme }) => theme.radius.md};
@@ -62,6 +104,10 @@ export const ValueCard = styled.article`
   text-align: center;
   box-shadow: 0 4px 12px rgba(1, 131, 131, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   &:hover,
   &:focus-within {
@@ -71,15 +117,13 @@ export const ValueCard = styled.article`
   }
 `;
 
-// Título do valor
 export const ValueTitle = styled.h3`
   font-size: 1.25rem;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.primary};
-  margin-bottom: 0.75rem;
+  margin: 0.75rem 0;
 `;
 
-// Texto do valor
 export const ValueText = styled.p`
   font-size: 1rem;
   color: ${({ theme }) => theme.colors.text};
