@@ -1,4 +1,5 @@
-// src/app/services/components/ServicesHero.tsx
+// src/app/components/services/ServicesHero.ts
+
 "use client";
 
 import React from "react";

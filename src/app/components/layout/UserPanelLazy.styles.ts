@@ -1,3 +1,5 @@
+// src/components/layout/UserPanelLazy.styles.ts
+
 import styled from "styled-components";
 
 export const UserPanelContainer = styled.div`

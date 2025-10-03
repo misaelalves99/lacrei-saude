@@ -1,4 +1,5 @@
-// src/components/sections/Hero.styles.ts
+// src/components/home/Hero.styles.ts
+
 "use client";
 
 import styled from "styled-components";

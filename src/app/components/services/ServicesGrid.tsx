@@ -1,4 +1,5 @@
-// src/app/services/components/ServicesGrid.tsx
+// src/components/services/ServicesGrid.tsx
+
 "use client";
 
 import React from "react";

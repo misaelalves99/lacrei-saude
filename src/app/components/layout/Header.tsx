@@ -1,3 +1,5 @@
+// src/components/layout/Header.tsx
+
 "use client";
 
 import { useState, useEffect, useRef, memo } from "react";

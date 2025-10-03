@@ -1,4 +1,5 @@
 // src/components/auth/AuthForm.tsx
+
 "use client";
 import React, { useState } from "react";
 import * as S from "./Auth.styles";
@@ -28,7 +29,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onSubmit({ name, email, password });
+    const data: { name?: string; email: string; password: string } = { email, password };
+    if (type === "register") data.name = name; // só inclui name no registro
+    await onSubmit(data);
   };
 
   const Divider: React.FC<{ children?: React.ReactNode }> = ({ children = "ou" }) => (

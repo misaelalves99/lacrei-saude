@@ -1,4 +1,5 @@
-// src/components/sections/CTASection.tsx
+// src/components/home/CTASection.tsx
+
 "use client";
 
 import React from "react";

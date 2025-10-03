@@ -1,4 +1,5 @@
-// src/components/sections/CTASection.styles.ts
+// src/components/home/CTASection.styles.ts
+
 "use client";
 
 import styled from "styled-components";

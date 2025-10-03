@@ -1,4 +1,5 @@
 // src/components/layout/UserPanelLazy.tsx
+
 "use client";
 
 import Link from "next/link";

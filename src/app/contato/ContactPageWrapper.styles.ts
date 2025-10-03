@@ -1,4 +1,4 @@
-// src/components/contact/ContactPageWrapper.styles.ts
+// src/app/contato/ContactPageWrapper.styles.ts
 
 "use client";
 

@@ -1,3 +1,4 @@
+// src/app/layout.tsx
 "use client";
 
 import React from "react";
@@ -8,8 +9,6 @@ import { GlobalStyle } from "./styles/global-styles";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { SkipToContent } from "./components/ui/SkipToContent";
-
-// Contexto de Autenticação
 import { AuthProvider } from "./contexts/AuthProvider";
 
 // Importando Nunito do Google Fonts
@@ -37,16 +36,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
-          {/* Skip link para acessibilidade */}
           <SkipToContent />
-          
-          {/* Provider de Autenticação */}
           <AuthProvider>
             <Header />
-            
-            {/* Main content */}
             <main id="main-content">{children}</main>
-            
             <Footer />
           </AuthProvider>
         </ThemeProvider>

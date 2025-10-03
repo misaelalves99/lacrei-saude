@@ -1,3 +1,5 @@
+// src/app/register/Register.styles.ts
+
 import styled from "styled-components";
 
 /* Wrapper centralizado */

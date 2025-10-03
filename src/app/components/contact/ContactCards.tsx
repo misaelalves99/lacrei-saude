@@ -1,3 +1,5 @@
+// src/components/contact/ContactCards.tsx
+
 "use client";
 
 import React from "react";
@@ -15,7 +17,7 @@ export const ContactCards: React.FC = () => {
     <S.ContactGrid>
       {CONTACTS.map((item) => (
         <S.ContactCard key={item.title}>
-          <div>{item.icon}</div>
+          <div data-testid="contact-icon">{item.icon}</div>
           <S.ContactCardTitle>{item.title}</S.ContactCardTitle>
           <S.ContactCardText>{item.text}</S.ContactCardText>
         </S.ContactCard>

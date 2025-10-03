@@ -1,3 +1,5 @@
+// src/components/layout/Header.styles.ts
+
 import styled from "styled-components";
 
 // ---------- CONTAINER PRINCIPAL ----------

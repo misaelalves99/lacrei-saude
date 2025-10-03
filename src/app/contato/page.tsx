@@ -1,4 +1,5 @@
 // src/app/contato/page.tsx
+
 "use client";
 
 import React from "react";

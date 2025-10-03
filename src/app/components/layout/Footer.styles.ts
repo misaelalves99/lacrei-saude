@@ -1,4 +1,5 @@
 // src/components/layout/Footer.styles.ts
+
 import styled from "styled-components";
 
 export const FooterContainer = styled.footer`

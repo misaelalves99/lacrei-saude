@@ -1,4 +1,5 @@
-// src/app/services/components/ServiceCard.styles.ts
+// src/components/services/ServiceCard.styles.ts
+
 "use client";
 
 import styled from "styled-components";
