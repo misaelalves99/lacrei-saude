@@ -4,19 +4,8 @@ import { useState, useEffect, useRef, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import {
-  HeaderContainer,
-  Brand,
-  Nav,
-  DesktopList,
-  NavItem,
-  NavLink,
-  MenuButton,
-  MobilePanel,
-  UserButton
-} from "./Header.styles";
+import * as S from "./Header.styles";
 
-// Lazy load do painel de usuário
 const UserPanelLazy = dynamic(() => import("./UserPanelLazy"), { ssr: false });
 
 const NAV_LINKS = [
@@ -53,70 +42,79 @@ function HeaderComponent() {
   }, []);
 
   return (
-    <HeaderContainer role="banner" aria-label="Cabeçalho da Lacrei Saúde">
-      <Brand>
-        <Link href="/" aria-label="Lacrei Saúde — Início">
-          <Image src="/assets/logo.svg" alt="Lacrei Saúde" width={40} height={40} priority />
-        </Link>
-      </Brand>
+    <S.HeaderContainer role="banner" aria-label="Cabeçalho da Lacrei Saúde">
+      <S.HeaderInner>
+        {/* LOGO */}
+        <S.Brand>
+          <Link href="/" aria-label="Lacrei Saúde — Início">
+            <Image src="/assets/logo.svg" alt="Lacrei Saúde" width={40} height={40} priority />
+          </Link>
+        </S.Brand>
 
-      <Nav aria-label="Navegação principal">
-        <DesktopList role="menubar">
-          {NAV_LINKS.map(link => (
-            <NavItem key={link.href} role="none">
-              <Link href={link.href} passHref legacyBehavior>
-                <NavLink role="menuitem">{link.label}</NavLink>
+        {/* NAVEGAÇÃO */}
+        <S.Nav aria-label="Navegação principal">
+          <S.List role="menubar">
+            {NAV_LINKS.map((link) => (
+              <S.Item key={link.href} role="none">
+                <Link href={link.href} passHref legacyBehavior>
+                  <S.NavLink role="menuitem">{link.label}</S.NavLink>
+                </Link>
+              </S.Item>
+            ))}
+
+            {/* MENU USUÁRIO */}
+            <S.Item style={{ position: "relative" }}>
+              <div ref={userRef}>
+                <S.UserButton
+                  aria-label="Menu do usuário"
+                  aria-haspopup="true"
+                  aria-expanded={openUser}
+                  onClick={() => setOpenUser((prev) => !prev)}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 
+                        1.79-4 4 1.79 4 4 4zm0 2c-2.67 
+                        0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </S.UserButton>
+
+                {openUser && <UserPanelLazy onClose={() => setOpenUser(false)} />}
+              </div>
+            </S.Item>
+          </S.List>
+
+          {/* BOTÃO MOBILE */}
+          <S.MenuButton
+            aria-controls="mobile-menu"
+            aria-expanded={openMenu}
+            aria-label={openMenu ? "Fechar menu" : "Abrir menu"}
+            onClick={() => setOpenMenu((prev) => !prev)}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </S.MenuButton>
+
+          {/* MENU MOBILE */}
+          <S.MobilePanel open={openMenu} ref={menuRef} role="menu" aria-label="Menu móvel">
+            {NAV_LINKS.map((link) => (
+              <Link key={link.href} href={link.href} passHref legacyBehavior>
+                <S.NavLink onClick={() => setOpenMenu(false)}>{link.label}</S.NavLink>
               </Link>
-            </NavItem>
-          ))}
-
-          <NavItem style={{ position: "relative" }}>
-            <div ref={userRef}>
-              <UserButton
-                aria-label="Menu do usuário"
-                aria-haspopup="true"
-                aria-expanded={openUser}
-                onClick={() => setOpenUser(prev => !prev)}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </UserButton>
-
-              {openUser && <UserPanelLazy onClose={() => setOpenUser(false)} />}
-            </div>
-          </NavItem>
-        </DesktopList>
-
-        <MenuButton
-          aria-controls="mobile-menu"
-          aria-expanded={openMenu}
-          aria-label={openMenu ? "Fechar menu" : "Abrir menu"}
-          onClick={() => setOpenMenu(prev => !prev)}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </MenuButton>
-
-        <MobilePanel open={openMenu} ref={menuRef} role="menu" aria-label="Menu móvel">
-          {NAV_LINKS.map(link => (
-            <Link key={link.href} href={link.href} passHref legacyBehavior>
-              <NavLink onClick={() => setOpenMenu(false)}>{link.label}</NavLink>
+            ))}
+            <Link href="/login" passHref legacyBehavior>
+              <S.NavLink onClick={() => setOpenMenu(false)}>Login</S.NavLink>
             </Link>
-          ))}
-          <Link href="/login" passHref legacyBehavior>
-            <NavLink onClick={() => setOpenMenu(false)}>Login</NavLink>
-          </Link>
-          <Link href="/register" passHref legacyBehavior>
-            <NavLink onClick={() => setOpenMenu(false)}>Cadastrar</NavLink>
-          </Link>
-        </MobilePanel>
-      </Nav>
-    </HeaderContainer>
+            <Link href="/register" passHref legacyBehavior>
+              <S.NavLink onClick={() => setOpenMenu(false)}>Cadastrar</S.NavLink>
+            </Link>
+          </S.MobilePanel>
+        </S.Nav>
+      </S.HeaderInner>
+    </S.HeaderContainer>
   );
 }
 

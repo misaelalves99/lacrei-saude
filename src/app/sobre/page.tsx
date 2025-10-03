@@ -3,7 +3,6 @@
 
 import React from "react";
 import { HeroWrapper, Title, Subtitle } from "../components/sections/Hero.styles";
-import { CTASection } from "../components/sections/CTASection";
 import * as S from "./Sobre.styles";
 
 // Ícones
@@ -74,8 +73,6 @@ export default function AboutPage() {
           </S.ValueCard>
         </S.ValuesGrid>
       </S.Section>
-
-      <CTASection />
     </main>
   );
 }

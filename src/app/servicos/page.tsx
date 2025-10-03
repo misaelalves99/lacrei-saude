@@ -4,7 +4,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CTASection } from "../components/sections/CTASection";
 import * as S from "./Servicos.styles";
 
 const SERVICES = [
@@ -83,8 +82,6 @@ export default function ServicesPage() {
           ))}
         </S.ServicesGrid>
       </S.Section>
-
-      <CTASection />
     </main>
   );
 }
