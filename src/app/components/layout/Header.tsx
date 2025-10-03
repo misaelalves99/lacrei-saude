@@ -3,10 +3,8 @@
 import { useState, useEffect, useRef, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import * as S from "./Header.styles";
-
-const UserPanelLazy = dynamic(() => import("./UserPanelLazy"), { ssr: false });
+import { useAuth } from "../../hooks/useAuth";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -16,11 +14,14 @@ const NAV_LINKS = [
 ];
 
 function HeaderComponent() {
+  const { user, logout } = useAuth();
+
   const [openMenu, setOpenMenu] = useState(false);
   const [openUser, setOpenUser] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const userRef = useRef<HTMLDivElement | null>(null);
 
+  // Fechar menus ao clicar fora
   useEffect(() => {
     const handleOutside = (e: MouseEvent) => {
       if (openMenu && menuRef.current && !menuRef.current.contains(e.target as Node)) setOpenMenu(false);
@@ -30,6 +31,7 @@ function HeaderComponent() {
     return () => document.removeEventListener("mousedown", handleOutside);
   }, [openMenu, openUser]);
 
+  // Fechar menus com ESC
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -40,6 +42,11 @@ function HeaderComponent() {
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
   }, []);
+
+  const handleLogout = async () => {
+    await logout();
+    setOpenUser(false);
+  };
 
   return (
     <S.HeaderContainer role="banner" aria-label="Cabeçalho da Lacrei Saúde">
@@ -74,14 +81,29 @@ function HeaderComponent() {
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path
                       d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 
-                        1.79-4 4 1.79 4 4 4zm0 2c-2.67 
-                        0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                         1.79-4 4 1.79 4 4 4zm0 2c-2.67 
+                         0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
                       fill="currentColor"
                     />
                   </svg>
                 </S.UserButton>
 
-                {openUser && <UserPanelLazy onClose={() => setOpenUser(false)} />}
+                {openUser && (
+                  <S.UserMenu role="menu">
+                    {user ? (
+                      <S.UserMenuItem onClick={handleLogout}>Sair</S.UserMenuItem>
+                    ) : (
+                      <>
+                        <Link href="/login" passHref legacyBehavior>
+                          <S.UserMenuItem as="a" onClick={() => setOpenUser(false)}>Login</S.UserMenuItem>
+                        </Link>
+                        <Link href="/register" passHref legacyBehavior>
+                          <S.UserMenuItem as="a" onClick={() => setOpenUser(false)}>Cadastrar</S.UserMenuItem>
+                        </Link>
+                      </>
+                    )}
+                  </S.UserMenu>
+                )}
               </div>
             </S.Item>
           </S.List>
@@ -105,12 +127,21 @@ function HeaderComponent() {
                 <S.NavLink onClick={() => setOpenMenu(false)}>{link.label}</S.NavLink>
               </Link>
             ))}
-            <Link href="/login" passHref legacyBehavior>
-              <S.NavLink onClick={() => setOpenMenu(false)}>Login</S.NavLink>
-            </Link>
-            <Link href="/register" passHref legacyBehavior>
-              <S.NavLink onClick={() => setOpenMenu(false)}>Cadastrar</S.NavLink>
-            </Link>
+            {/* Dropdown usuário mobile */}
+            <S.NavLink as="div">
+              {user ? (
+                <S.UserMenuItem onClick={handleLogout}>Sair</S.UserMenuItem>
+              ) : (
+                <>
+                  <Link href="/login" passHref legacyBehavior>
+                    <S.UserMenuItem as="a" onClick={() => setOpenMenu(false)}>Login</S.UserMenuItem>
+                  </Link>
+                  <Link href="/register" passHref legacyBehavior>
+                    <S.UserMenuItem as="a" onClick={() => setOpenMenu(false)}>Cadastrar</S.UserMenuItem>
+                  </Link>
+                </>
+              )}
+            </S.NavLink>
           </S.MobilePanel>
         </S.Nav>
       </S.HeaderInner>

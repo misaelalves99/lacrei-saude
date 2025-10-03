@@ -1,3 +1,5 @@
+// src/app/login/Login.styles.ts
+
 import styled from "styled-components";
 
 /* ----------------------------
@@ -52,13 +54,16 @@ export const Form = styled.form`
   gap: 1rem;
 `;
 
-export const Input = styled.input`
+/* Input padrão */
+export const Input = styled.input<{ hasToggle?: boolean }>`
   padding: 0.75rem 1rem;
+  padding-right: ${({ hasToggle }) => (hasToggle ? "2.5rem" : "1rem")};
   border: 1px solid #d1d5db;
   border-radius: ${({ theme }) => theme.radius.md};
   font-size: 1rem;
   font-family: ${({ theme }) => theme.fonts.body};
   outline: none;
+  width: 100%;
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
@@ -66,6 +71,36 @@ export const Input = styled.input`
   }
 `;
 
+/* Wrapper do input de senha com botão */
+export const PasswordWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+/* Botão mostrar/ocultar senha */
+export const TogglePasswordButton = styled.button`
+  position: absolute;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 1.1rem;
+  padding: 0.25rem;
+
+  &:hover,
+  &:focus-visible {
+    color: ${({ theme }) => theme.colors.primaryDark};
+    outline: none;
+  }
+`;
+
+/* Botão principal */
 export const Button = styled.button`
   padding: 0.75rem 1rem;
   background: ${({ theme }) => theme.colors.primary};

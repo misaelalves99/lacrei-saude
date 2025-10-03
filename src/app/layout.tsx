@@ -1,5 +1,3 @@
-// src/app/layout.tsx
-
 "use client";
 
 import React from "react";
@@ -11,6 +9,9 @@ import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { SkipToContent } from "./components/ui/SkipToContent";
 
+// Contexto de Autenticação
+import { AuthProvider } from "./contexts/AuthProvider";
+
 // Importando Nunito do Google Fonts
 const nunito = Nunito({
   subsets: ["latin"],
@@ -18,7 +19,11 @@ const nunito = Nunito({
   variable: "--font-nunito",
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR" className={nunito.variable}>
       <head>
@@ -32,10 +37,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
+          {/* Skip link para acessibilidade */}
           <SkipToContent />
-          <Header />
-          <main id="main-content">{children}</main>
-          <Footer />
+          
+          {/* Provider de Autenticação */}
+          <AuthProvider>
+            <Header />
+            
+            {/* Main content */}
+            <main id="main-content">{children}</main>
+            
+            <Footer />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

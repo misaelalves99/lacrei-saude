@@ -12,9 +12,9 @@ export const HeaderContainer = styled.header`
 
 // ---------- CONTAINER INTERNO ----------
 export const HeaderInner = styled.div`
-  max-width: 1200px; // largura máxima
-  margin: 0 auto; // centraliza
-  padding: clamp(0.75rem, 2vw, 1.25rem) 2rem; // padding lateral responsivo
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(0.75rem, 2vw, 1.25rem) 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -135,5 +135,36 @@ export const UserButton = styled.button`
   &:focus-visible {
     background: rgba(1, 131, 131, 0.1);
     outline: none;
+  }
+`;
+
+// ---------- MENU DO USUÁRIO ----------
+export const UserMenu = styled.div`
+  position: absolute;
+  right: 0;
+  margin-top: 0.5rem;
+  background: ${({ theme }) => theme.colors.white};
+  border: 1px solid #ddd;
+  border-radius: 0.375rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const UserMenuItem = styled.button`
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.text};
+
+  &:hover {
+    background: rgba(1, 131, 131, 0.1);
+    color: ${({ theme }) => theme.colors.primaryDark};
   }
 `;

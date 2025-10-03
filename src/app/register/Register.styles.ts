@@ -6,7 +6,7 @@ export const AuthWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 4rem 1rem;
-  min-height: calc(100vh - 160px); // header + footer
+  min-height: calc(100vh - 160px);
   background: ${({ theme }) => theme.colors.backgroundGradient};
 `;
 
@@ -26,7 +26,7 @@ export const AuthCard = styled.div`
   }
 `;
 
-/* Título do formulário */
+/* Título */
 export const Title = styled.h2`
   font-size: 1.75rem;
   font-weight: 700;
@@ -39,7 +39,7 @@ export const Title = styled.h2`
   }
 `;
 
-/* Subtítulo do formulário */
+/* Subtítulo */
 export const Subtitle = styled.p`
   font-size: 1rem;
   color: ${({ theme }) => theme.colors.text};
@@ -58,7 +58,14 @@ export const Form = styled.form`
   gap: 1rem;
 `;
 
-/* Input */
+/* Wrapper do input de senha */
+export const PasswordWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+/* Input padrão */
 export const Input = styled.input`
   padding: 0.75rem 1rem;
   border: 1px solid #d1d5db;
@@ -67,10 +74,37 @@ export const Input = styled.input`
   font-family: ${({ theme }) => theme.fonts.body};
   outline: none;
   transition: border 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  
+  /* Adiciona padding à direita para o botão de toggle */
+  ${(props: { hasToggle?: boolean }) =>
+    props.hasToggle ? "padding-right: 2.5rem;" : ""}
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
     box-shadow: 0 0 0 3px rgba(1, 131, 131, 0.2);
+  }
+`;
+
+/* Botão mostrar/ocultar senha */
+export const TogglePasswordButton = styled.button`
+  position: absolute;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 1.1rem;
+  padding: 0.25rem;
+  height: 100%;
+
+  &:hover,
+  &:focus {
+    color: ${({ theme }) => theme.colors.primaryDark};
+    outline: none;
   }
 `;
 
@@ -118,9 +152,7 @@ export const LinkText = styled.p`
   }
 `;
 
-/* ----------------------------
-   Login Social (apenas ícones redondos)
----------------------------- */
+/* Login social */
 export const SocialLogin = styled.div`
   display: flex;
   justify-content: center;
@@ -128,7 +160,6 @@ export const SocialLogin = styled.div`
   margin: 1.5rem 0;
 `;
 
-/* Botão social */
 export const SocialButton = styled.button`
   display: flex;
   align-items: center;
@@ -149,17 +180,17 @@ export const SocialButton = styled.button`
   }
 
   &:first-child {
-    background: #db4437; /* Google Red */
+    background: #db4437; /* Google */
     color: #fff;
   }
 
   &:last-child {
-    background: #1877f2; /* Facebook Blue */
+    background: #1877f2; /* Facebook */
     color: #fff;
   }
 `;
 
-/* Divider entre formulário e login social */
+/* Divider */
 export const Divider = styled.div`
   text-align: center;
   margin: 1rem 0;
@@ -186,7 +217,7 @@ export const Divider = styled.div`
   }
 `;
 
-/* Classe utilitária para acessibilidade */
+/* Classe para acessibilidade */
 export const SrOnly = styled.span`
   position: absolute;
   width: 1px;
