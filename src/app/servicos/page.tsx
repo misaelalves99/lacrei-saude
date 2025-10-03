@@ -59,7 +59,7 @@ export default function ServicesPage() {
           {/* Imagem */}
           <div style={{ flex: 1, minWidth: 300, display: "flex", justifyContent: "center" }}>
             <Image
-              src="/assets/nossos-servicos.png"
+              src="/assets/services-hero.png"
               alt="Profissional de saúde atendendo paciente"
               width={500}
               height={400}

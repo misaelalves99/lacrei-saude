@@ -1,19 +1,27 @@
-// src/contato/page.tsx
+// src/app/contato/page.tsx
 "use client";
 
 import React from "react";
+import { ContactHero } from "../components/contact/ContactHero";
 import { ContactForm } from "../components/contact/ContactForm";
-import * as S from "./ContactPage.styles";
+import { ContactCards } from "../components/contact/ContactCards";
+import { ContactPageWrapper } from "./ContactPageWrapper.styles";
 
-export default function ContactPage() {
+export default function ContatosPage() {
   return (
-    <S.ContactPageWrapper>
-      <S.PageTitle>Fale Conosco</S.PageTitle>
-      <S.PageSubtitle>
-        Preencha o formulário abaixo e nossa equipe entrará em contato o mais
-        rápido possível.
-      </S.PageSubtitle>
-      <ContactForm />
-    </S.ContactPageWrapper>
+    <main id="main-content">
+      {/* Hero da página */}
+      <ContactHero />
+
+      {/* Seção de formulário */}
+      <ContactPageWrapper>
+        <ContactForm />
+      </ContactPageWrapper>
+
+      {/* Seção de informações de contato */}
+      <ContactPageWrapper>
+        <ContactCards />
+      </ContactPageWrapper>
+    </main>
   );
 }

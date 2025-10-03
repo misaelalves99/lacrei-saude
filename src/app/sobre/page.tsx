@@ -20,7 +20,7 @@ export default function AboutPage() {
             </S.SubtitleHero>
           </S.HeroText>
           <S.HeroImage
-            src="https://cdn.pixabay.com/photo/2017/07/18/23/23/group-2517427_1280.png"
+            src="/assets/about-hero.png"
             alt="Profissional de saúde atendendo paciente"
           />
         </S.HeroContent>
