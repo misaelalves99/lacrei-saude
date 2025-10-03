@@ -1,4 +1,4 @@
-// src/app/servicos/components/ServicesHero.styles.ts
+// src/components/about/AboutHero.styles.ts
 "use client";
 
 import styled from "styled-components";
@@ -7,6 +7,7 @@ export const HeroWrapper = styled.section`
   width: 100%;
   background: ${({ theme }) => theme.colors.backgroundGradient};
   color: ${({ theme }) => theme.colors.text};
+  border-radius: 0;
   padding: 3rem 1rem;
 `;
 
@@ -16,7 +17,6 @@ export const HeroContent = styled.div`
   margin: 0 auto;
 
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
@@ -25,16 +25,13 @@ export const HeroContent = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
   }
 `;
 
 export const HeroText = styled.div`
   max-width: 600px;
   flex: 1;
-
-  @media (max-width: 768px) {
-    text-align: center;
-  }
 `;
 
 export const TitleHero = styled.h1`
@@ -57,4 +54,12 @@ export const SubtitleHero = styled.p`
   @media (max-width: 768px) {
     font-size: 1rem;
   }
+`;
+
+export const HeroImage = styled.img`
+  border-radius: 12px;
+  object-fit: cover;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
 `;

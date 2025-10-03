@@ -2,8 +2,8 @@
 "use client";
 
 import React from "react";
-import { ServicesHero } from "../components/servicos/ServicesHero";
-import { ServicesGrid } from "../components/servicos/ServicesGrid";
+import { ServicesHero } from "../components/services/ServicesHero";
+import { ServicesGrid } from "../components/services/ServicesGrid";
 import * as S from "./Servicos.styles";
 
 export default function ServicesPage() {

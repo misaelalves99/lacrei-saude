@@ -1,4 +1,4 @@
-// src/app/servicos/components/ServicesGrid.styles.ts
+// src/app/services/components/ServicesGrid.styles.ts
 "use client";
 
 import styled from "styled-components";
