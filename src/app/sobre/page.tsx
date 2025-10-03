@@ -1,8 +1,6 @@
-// src/app/sobre/page.tsx
 "use client";
 
 import React from "react";
-import { HeroWrapper, Title, Subtitle } from "../components/sections/Hero.styles";
 import * as S from "./Sobre.styles";
 
 // Ícones
@@ -12,66 +10,90 @@ import { MdOutlineHealthAndSafety, MdOutlineDiversity3, MdOutlinePsychology, MdO
 export default function AboutPage() {
   return (
     <main id="main-content">
-      <HeroWrapper>
-        <Title>Sobre a Lacrei Saúde</Title>
-        <Subtitle>
-          Promovendo saúde acessível e inclusiva para todas as pessoas, com atenção, respeito e acolhimento.
-        </Subtitle>
-      </HeroWrapper>
+      {/* Hero */}
+      <S.HeroWrapper role="region" aria-labelledby="hero-title">
+        <S.HeroContent>
+          <S.HeroText>
+            <S.TitleHero id="hero-title">Sobre a Lacrei Saúde</S.TitleHero>
+            <S.SubtitleHero>
+              Promovendo saúde acessível e inclusiva para todas as pessoas, com atenção, respeito e acolhimento.
+            </S.SubtitleHero>
+          </S.HeroText>
+          <S.HeroImage
+            src="https://cdn.pixabay.com/photo/2017/07/18/23/23/group-2517427_1280.png"
+            alt="Profissional de saúde atendendo paciente"
+          />
+        </S.HeroContent>
+      </S.HeroWrapper>
 
       {/* Seção Missão */}
       <S.Section aria-labelledby="mission-title">
         <S.SectionTitle id="mission-title">Nossa Missão</S.SectionTitle>
-        <S.SectionText>
-          Garantir que cada pessoa, independentemente de suas características individuais, 
-          tenha acesso a cuidados de saúde de qualidade, com empatia, acolhimento e segurança.
-        </S.SectionText>
+        <S.SectionSubtitle>
+          Garantir que cada pessoa, independentemente de suas características individuais, tenha acesso a cuidados de saúde de qualidade, com empatia, acolhimento e segurança.
+        </S.SectionSubtitle>
 
-        <S.MissionGrid>
-          <S.MissionCard>
-            <FaHandHoldingMedical size={40} color="#018383" />
-            <S.MissionText>Acolhimento humano e inclusivo</S.MissionText>
-          </S.MissionCard>
-          <S.MissionCard>
-            <FaHeartbeat size={40} color="#018383" />
-            <S.MissionText>Promoção do bem-estar integral</S.MissionText>
-          </S.MissionCard>
-          <S.MissionCard>
-            <FaUserFriends size={40} color="#018383" />
-            <S.MissionText>Atendimento sem discriminação</S.MissionText>
-          </S.MissionCard>
-          <S.MissionCard>
-            <FaLaptopMedical size={40} color="#018383" />
-            <S.MissionText>Tecnologia acessível a todos</S.MissionText>
-          </S.MissionCard>
-        </S.MissionGrid>
+        <S.ServicesGrid>
+          <S.ServiceCard>
+            <FaHandHoldingMedical size={36} color="#018383" />
+            <S.ServiceTitle>Acolhimento humano e inclusivo</S.ServiceTitle>
+            <S.ServiceDescription>
+              Priorizamos a escuta ativa, empatia e atendimento personalizado para todas as pessoas.
+            </S.ServiceDescription>
+          </S.ServiceCard>
+          <S.ServiceCard>
+            <FaHeartbeat size={36} color="#018383" />
+            <S.ServiceTitle>Promoção do bem-estar integral</S.ServiceTitle>
+            <S.ServiceDescription>
+              Focamos na prevenção, qualidade de vida e cuidado físico e emocional.
+            </S.ServiceDescription>
+          </S.ServiceCard>
+          <S.ServiceCard>
+            <FaUserFriends size={36} color="#018383" />
+            <S.ServiceTitle>Atendimento sem discriminação</S.ServiceTitle>
+            <S.ServiceDescription>
+              Todos são tratados com respeito e igualdade, independente de gênero, idade ou orientação.
+            </S.ServiceDescription>
+          </S.ServiceCard>
+          <S.ServiceCard>
+            <FaLaptopMedical size={36} color="#018383" />
+            <S.ServiceTitle>Tecnologia acessível a todos</S.ServiceTitle>
+            <S.ServiceDescription>
+              Utilizamos ferramentas digitais para oferecer atendimento moderno, seguro e prático.
+            </S.ServiceDescription>
+          </S.ServiceCard>
+        </S.ServicesGrid>
       </S.Section>
 
       {/* Seção Valores */}
       <S.Section aria-labelledby="values-title">
         <S.SectionTitle id="values-title">Nossos Valores</S.SectionTitle>
-        <S.ValuesGrid>
-          <S.ValueCard role="article">
+        <S.SectionSubtitle>
+          Princípios que orientam nossas ações e garantem confiança e segurança a todos.
+        </S.SectionSubtitle>
+
+        <S.ServicesGrid>
+          <S.ServiceCard>
             <MdOutlineDiversity3 size={36} color="#018383" />
-            <S.ValueTitle>Inclusão</S.ValueTitle>
-            <S.ValueText>Todos são bem-vindos, respeitando diversidade e singularidade.</S.ValueText>
-          </S.ValueCard>
-          <S.ValueCard role="article">
+            <S.ServiceTitle>Inclusão</S.ServiceTitle>
+            <S.ServiceDescription>Respeitamos a diversidade e singularidade de cada pessoa.</S.ServiceDescription>
+          </S.ServiceCard>
+          <S.ServiceCard>
             <MdOutlinePsychology size={36} color="#018383" />
-            <S.ValueTitle>Empatia</S.ValueTitle>
-            <S.ValueText>Colocamo-nos no lugar do outro para compreender necessidades reais.</S.ValueText>
-          </S.ValueCard>
-          <S.ValueCard role="article">
+            <S.ServiceTitle>Empatia</S.ServiceTitle>
+            <S.ServiceDescription>Colocamo-nos no lugar do outro para entender suas necessidades.</S.ServiceDescription>
+          </S.ServiceCard>
+          <S.ServiceCard>
             <MdOutlineHealthAndSafety size={36} color="#018383" />
-            <S.ValueTitle>Excelência</S.ValueTitle>
-            <S.ValueText>Priorizamos qualidade, segurança e eficiência em todos os serviços.</S.ValueText>
-          </S.ValueCard>
-          <S.ValueCard role="article">
+            <S.ServiceTitle>Excelência</S.ServiceTitle>
+            <S.ServiceDescription>Garantimos qualidade, segurança e eficiência em todos os serviços.</S.ServiceDescription>
+          </S.ServiceCard>
+          <S.ServiceCard>
             <MdOutlineVerified size={36} color="#018383" />
-            <S.ValueTitle>Transparência</S.ValueTitle>
-            <S.ValueText>Agimos com clareza e responsabilidade em todas as nossas ações.</S.ValueText>
-          </S.ValueCard>
-        </S.ValuesGrid>
+            <S.ServiceTitle>Transparência</S.ServiceTitle>
+            <S.ServiceDescription>Agimos com clareza, ética e responsabilidade em todas as nossas ações.</S.ServiceDescription>
+          </S.ServiceCard>
+        </S.ServicesGrid>
       </S.Section>
     </main>
   );

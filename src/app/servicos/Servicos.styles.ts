@@ -3,24 +3,41 @@
 
 import styled from "styled-components";
 
+// ---------- HERO PRINCIPAL ----------
 export const HeroWrapper = styled.section`
+  width: 100%;
+  background: ${({ theme }) => theme.colors.backgroundGradient};
+  color: ${({ theme }) => theme.colors.text};
+  border-radius: 0; /* gradiente ocupa full width, sem arredondar */
+  padding: 3rem 1rem;
+`;
+
+// Container interno para alinhar como Header
+export const HeroContent = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* texto à esquerda, imagem à direita */
   gap: 2rem;
-  padding: 3rem 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
 
-export const HeroContent = styled.div`
-  flex: 1;
-  min-width: 300px;
+  @media (max-width: 768px) {
+    flex-direction: column; /* imagem abaixo do texto no mobile */
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const HeroText = styled.div`
   max-width: 600px;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `;
 
 export const TitleHero = styled.h1`
@@ -28,6 +45,10 @@ export const TitleHero = styled.h1`
   font-weight: 700;
   margin-bottom: 1rem;
   color: ${({ theme }) => theme.colors.primaryDark};
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 export const SubtitleHero = styled.p`
@@ -35,7 +56,13 @@ export const SubtitleHero = styled.p`
   line-height: 1.6;
   color: ${({ theme }) => theme.colors.text};
   opacity: 0.9;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
+
+// ---------- SEÇÕES ----------
 
 export const Section = styled.section`
   padding: 4rem 1rem;
@@ -49,6 +76,10 @@ export const SectionTitle = styled.h2`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.primaryDark};
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
 `;
 
 export const SectionSubtitle = styled.p`
@@ -60,13 +91,21 @@ export const SectionSubtitle = styled.p`
   margin-right: auto;
   color: ${({ theme }) => theme.colors.text};
   opacity: 0.9;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
 `;
+
+// ---------- GRID DE SERVIÇOS ----------
 
 export const ServicesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
 `;
+
+// ---------- CARTÕES DE SERVIÇOS ----------
 
 export const ServiceCard = styled.article`
   background: ${({ theme }) => theme.colors.white};
@@ -98,6 +137,8 @@ export const ServiceDescription = styled.p`
   margin-bottom: 1.5rem;
   color: ${({ theme }) => theme.colors.text};
 `;
+
+// ---------- BOTÃO DOS CARTÕES ----------
 
 export const CardButton = styled.button`
   background: ${({ theme }) => theme.colors.primary};

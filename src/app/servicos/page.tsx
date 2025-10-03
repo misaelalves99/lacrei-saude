@@ -47,25 +47,30 @@ export default function ServicesPage() {
     <main id="main-content">
       {/* Hero */}
       <S.HeroWrapper role="region" aria-labelledby="hero-title">
-        <Image
-          src="/assets/nossos-servicos.png"
-          alt="Profissional de saúde atendendo paciente"
-          width={500}
-          height={400}
-          style={{ borderRadius: "12px", objectFit: "cover" }}
-          loading="lazy"
-        />
         <S.HeroContent>
+          {/* Texto */}
           <S.HeroText>
             <S.TitleHero id="hero-title">Nossos Serviços</S.TitleHero>
             <S.SubtitleHero>
               Oferecemos soluções de saúde inclusivas, seguras e acessíveis, pensadas para cada pessoa.
             </S.SubtitleHero>
           </S.HeroText>
+
+          {/* Imagem */}
+          <div style={{ flex: 1, minWidth: 300, display: "flex", justifyContent: "center" }}>
+            <Image
+              src="/assets/nossos-servicos.png"
+              alt="Profissional de saúde atendendo paciente"
+              width={500}
+              height={400}
+              style={{ borderRadius: "12px", objectFit: "cover", maxWidth: "100%", height: "auto" }}
+              loading="lazy"
+            />
+          </div>
         </S.HeroContent>
       </S.HeroWrapper>
 
-      {/* Seção de serviços */}
+      {/* Seção de Serviços */}
       <S.Section aria-labelledby="services-title">
         <S.SectionTitle id="services-title">Serviços Disponíveis</S.SectionTitle>
         <S.SectionSubtitle>
