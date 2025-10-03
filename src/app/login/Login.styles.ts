@@ -1,6 +1,8 @@
-// src/app/auth/Login.styles.ts
 import styled from "styled-components";
 
+/* ----------------------------
+   Wrapper e Card
+---------------------------- */
 export const AuthWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -23,6 +25,9 @@ export const AuthCard = styled.div`
   }
 `;
 
+/* ----------------------------
+   Título e subtítulo
+---------------------------- */
 export const Title = styled.h1`
   font-size: 1.75rem;
   font-weight: 700;
@@ -38,6 +43,9 @@ export const Subtitle = styled.p`
   margin-bottom: 2rem;
 `;
 
+/* ----------------------------
+   Formulário
+---------------------------- */
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -79,6 +87,9 @@ export const Button = styled.button`
   }
 `;
 
+/* ----------------------------
+   Link
+---------------------------- */
 export const LinkText = styled.p`
   font-size: 0.9rem;
   text-align: center;
@@ -97,7 +108,89 @@ export const LinkText = styled.p`
   }
 `;
 
-/* Classe utilitária para acessibilidade (esconde label visual mas mantém no leitor de tela) */
+/* ----------------------------
+   Login Social (somente ícones redondos)
+---------------------------- */
+export const SocialLogin = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+`;
+
+export const SocialButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:first-child {
+    background: #db4437; /* Google Red */
+    color: #fff;
+
+    &:hover,
+    &:focus-visible {
+      background: #c33d2e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &:last-child {
+    background: #1877f2; /* Facebook Blue */
+    color: #fff;
+
+    &:hover,
+    &:focus-visible {
+      background: #155dbf;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+/* ----------------------------
+   Divider
+---------------------------- */
+export const Divider = styled.div`
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.text};
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    height: 1px;
+    width: 40%;
+    background: ${({ theme }) => theme.colors.text};
+    position: absolute;
+    top: 50%;
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+  }
+`;
+
+/* ----------------------------
+   Acessibilidade
+---------------------------- */
 export const SrOnly = styled.span`
   position: absolute;
   width: 1px;

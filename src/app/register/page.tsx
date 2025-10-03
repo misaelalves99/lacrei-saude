@@ -1,9 +1,11 @@
-// src/app/register/page.tsx
 "use client";
 
 import React, { useState } from "react";
 import * as S from "../login/Login.styles"; // Reaproveitando estilos
 import Link from "next/link";
+
+// Ícones para login social
+import { FaGoogle, FaFacebookF } from "react-icons/fa";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -16,6 +18,10 @@ export default function RegisterPage() {
     // Aqui você chamaria a API real de registro
   };
 
+  const handleSocialLogin = (provider: string) => {
+    alert(`Registro com ${provider}`);
+  };
+
   return (
     <main id="main-content">
       <S.AuthWrapper>
@@ -23,6 +29,7 @@ export default function RegisterPage() {
           <S.Title id="register-title">Criar Conta</S.Title>
           <S.Subtitle>Cadastre-se para acessar os serviços</S.Subtitle>
 
+          {/* Formulário */}
           <S.Form onSubmit={handleSubmit}>
             <label htmlFor="name" className="sr-only">
               Nome completo
@@ -64,6 +71,27 @@ export default function RegisterPage() {
               Cadastrar
             </S.Button>
           </S.Form>
+
+          <S.Divider>ou</S.Divider>
+
+          {/* Login Social apenas ícones redondos */}
+          <S.SocialLogin>
+            <S.SocialButton
+              type="button"
+              onClick={() => handleSocialLogin("Google")}
+              aria-label="Registrar com Google"
+            >
+              <FaGoogle size={20} />
+            </S.SocialButton>
+
+            <S.SocialButton
+              type="button"
+              onClick={() => handleSocialLogin("Facebook")}
+              aria-label="Registrar com Facebook"
+            >
+              <FaFacebookF size={20} />
+            </S.SocialButton>
+          </S.SocialLogin>
 
           <S.LinkText>
             Já tem conta?{" "}

@@ -1,9 +1,11 @@
-// src/app/login/page.tsx
 "use client";
 
 import React, { useState } from "react";
 import * as S from "./Login.styles";
 import Link from "next/link";
+
+// Ícones para login social
+import { FaGoogle, FaFacebookF } from "react-icons/fa";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -14,6 +16,10 @@ export default function LoginPage() {
     alert(`Login: ${email}`);
   };
 
+  const handleSocialLogin = (provider: string) => {
+    alert(`Login com ${provider}`);
+  };
+
   return (
     <main id="main-content">
       <S.AuthWrapper>
@@ -21,6 +27,7 @@ export default function LoginPage() {
           <S.Title id="login-title">Entrar</S.Title>
           <S.Subtitle>Acesse sua conta Lacrei Saúde</S.Subtitle>
 
+          {/* Formulário */}
           <S.Form onSubmit={handleSubmit}>
             <label htmlFor="email" className="sr-only">E-mail</label>
             <S.Input
@@ -48,6 +55,27 @@ export default function LoginPage() {
               Entrar
             </S.Button>
           </S.Form>
+
+          <S.Divider>ou</S.Divider>
+
+          {/* Login Social apenas ícones redondos */}
+          <S.SocialLogin>
+            <S.SocialButton
+              type="button"
+              onClick={() => handleSocialLogin("Google")}
+              aria-label="Entrar com Google"
+            >
+              <FaGoogle size={20} />
+            </S.SocialButton>
+
+            <S.SocialButton
+              type="button"
+              onClick={() => handleSocialLogin("Facebook")}
+              aria-label="Entrar com Facebook"
+            >
+              <FaFacebookF size={20} />
+            </S.SocialButton>
+          </S.SocialLogin>
 
           <S.LinkText>
             Não tem conta?{" "}
