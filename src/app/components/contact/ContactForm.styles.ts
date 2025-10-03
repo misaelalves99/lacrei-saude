@@ -83,3 +83,11 @@ export const SuccessMessage = styled.p`
   margin-bottom: 0.5rem;
   font-size: 0.95rem;
 `;
+
+export const ErrorMessage = styled.p`
+  color: #e63946; /* Vermelho de erro */
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+`;
