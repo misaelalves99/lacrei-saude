@@ -1,5 +1,6 @@
 // src/app/components/contact/ContactHero.test.tsx
 
+/* eslint-disable @next/next/no-img-element */
 import React, { ReactNode, HTMLAttributes } from "react";
 import { render, screen } from "@testing-library/react";
 import { ContactHero } from "./ContactHero";
@@ -9,17 +10,42 @@ interface StyledProps extends HTMLAttributes<HTMLElement> {
   children?: ReactNode;
 }
 
-// 🔹 Mock dos estilos (styled-components)
-jest.mock("./ContactHero.styles", () => ({
-  HeroWrapper: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
-  HeroContent: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
-  HeroText: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
-  TitleHero: ({ children, ...props }: StyledProps) => <h1 {...props}>{children}</h1>,
-  SubtitleHero: ({ children, ...props }: StyledProps) => <p {...props}>{children}</p>,
+// 🔹 Mock do next/image
+jest.mock("next/image", () => {
+  const React = require("react");
+  const NextImage = ({ src, alt, ...props }: { src: string; alt: string; [key: string]: unknown }) => (
+    <img src={src} alt={alt} {...props} />
+  );
+  NextImage.displayName = "NextImage";
+  return { __esModule: true, default: NextImage };
+});
 
-  // 🔹 Mock do HeroImage para testes
-  HeroImage: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
-}));
+// 🔹 Mock dos estilos (styled-components)
+jest.mock("./ContactHero.styles", () => {
+  const React = require("react");
+
+  const HeroWrapper = ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>;
+  HeroWrapper.displayName = "HeroWrapper";
+
+  const HeroContent = ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>;
+  HeroContent.displayName = "HeroContent";
+
+  const HeroText = ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>;
+  HeroText.displayName = "HeroText";
+
+  const TitleHero = ({ children, ...props }: StyledProps) => <h1 {...props}>{children}</h1>;
+  TitleHero.displayName = "TitleHero";
+
+  const SubtitleHero = ({ children, ...props }: StyledProps) => <p {...props}>{children}</p>;
+  SubtitleHero.displayName = "SubtitleHero";
+
+  const HeroImage = ({ src, alt, ...props }: { src: string; alt: string } & StyledProps) => (
+    <img src={src} alt={alt} {...props} />
+  );
+  HeroImage.displayName = "HeroImage";
+
+  return { HeroWrapper, HeroContent, HeroText, TitleHero, SubtitleHero, HeroImage };
+});
 
 describe("ContactHero Component", () => {
   it("renderiza com valores padrão", () => {

@@ -13,20 +13,18 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 jest.mock("./ServiceCard.styles", () => {
-  const React = require("react");
-
-  const CardWrapper = ({ children, ...props }: StyledProps) => (
+  const CardWrapper: React.FC<StyledProps> = ({ children, ...props }) => (
     <div role="article" {...props}>{children}</div>
   );
   CardWrapper.displayName = "CardWrapper";
 
-  const CardTitle = ({ children, ...props }: StyledProps) => <h2 {...props}>{children}</h2>;
+  const CardTitle: React.FC<StyledProps> = ({ children, ...props }) => <h2 {...props}>{children}</h2>;
   CardTitle.displayName = "CardTitle";
 
-  const CardDescription = ({ children, ...props }: StyledProps) => <p {...props}>{children}</p>;
+  const CardDescription: React.FC<StyledProps> = ({ children, ...props }) => <p {...props}>{children}</p>;
   CardDescription.displayName = "CardDescription";
 
-  const CardButton = ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>;
+  const CardButton: React.FC<ButtonProps> = ({ children, ...props }) => <button {...props}>{children}</button>;
   CardButton.displayName = "CardButton";
 
   return { CardWrapper, CardTitle, CardDescription, CardButton };
@@ -34,8 +32,7 @@ jest.mock("./ServiceCard.styles", () => {
 
 // 🔹 Mock do Link do Next.js
 jest.mock("next/link", () => {
-  const React = require("react");
-  const LinkMock = ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>;
+  const LinkMock: React.FC<{ children: ReactNode; href: string }> = ({ children, href }) => <a href={href}>{children}</a>;
   LinkMock.displayName = "Link";
   return LinkMock;
 });
@@ -50,7 +47,6 @@ describe("ServiceCard Component", () => {
 
   it("renderiza título, descrição e ícone", () => {
     render(<ServiceCard {...props} />);
-
     expect(screen.getByRole("article")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /consultas online/i })).toBeInTheDocument();
     expect(screen.getByText(/atendimento médico remoto/i)).toBeInTheDocument();
@@ -59,7 +55,6 @@ describe("ServiceCard Component", () => {
 
   it("renderiza o botão com link correto", () => {
     render(<ServiceCard {...props} />);
-
     const button = screen.getByRole("button", { name: /saiba mais/i });
     expect(button).toBeInTheDocument();
     expect(button.closest("a")).toHaveAttribute("href", "/servicos/online");
