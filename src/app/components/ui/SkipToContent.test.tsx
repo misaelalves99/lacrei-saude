@@ -1,13 +1,18 @@
 // src/components/ui/SkipToContent.test.tsx
 
-import React from "react";
+import React, { ReactNode, AnchorHTMLAttributes } from "react";
 import { render, screen } from "@testing-library/react";
 import { SkipToContent } from "./SkipToContent";
 import '@testing-library/jest-dom';
 
-// Mock do styled-components para ignorar theme
+// 🔹 Tipagem do mock
+interface MockLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  children?: ReactNode;
+}
+
+// 🔹 Mock do styled-components
 jest.mock("./SkipToContent.styles", () => ({
-  SkipLink: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+  SkipLink: ({ children, ...props }: MockLinkProps) => <a {...props}>{children}</a>,
 }));
 
 describe("SkipToContent component", () => {

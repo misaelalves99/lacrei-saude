@@ -2,21 +2,21 @@
 
 import React, { useContext } from "react";
 import { render, screen, act } from "@testing-library/react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext, AuthContextType } from "./AuthContext";
 import { AuthProvider } from "./AuthProvider";
 import { UserCredential } from "firebase/auth";
 
 // Mock completo do Firebase
 jest.mock("firebase/auth", () => {
   return {
-    getAuth: jest.fn(() => ({})), // mock do auth
+    getAuth: jest.fn(() => ({})),
     signInWithEmailAndPassword: jest.fn(),
     createUserWithEmailAndPassword: jest.fn(),
     signInWithPopup: jest.fn(),
     signOut: jest.fn(),
-    onAuthStateChanged: jest.fn((auth, callback) => {
-      callback(null); // usuário não autenticado
-      return jest.fn(); // unsubscribe
+    onAuthStateChanged: jest.fn((auth: any, callback: any) => {
+      callback(null);
+      return jest.fn();
     }),
     GoogleAuthProvider: jest.fn(),
     FacebookAuthProvider: jest.fn(),
@@ -33,7 +33,6 @@ import {
 } from "firebase/auth";
 
 describe("AuthProvider", () => {
-  // Componente de teste que consome o contexto
   const TestComponent = () => {
     const context = useContext(AuthContext);
     if (!context) return null;
@@ -98,7 +97,7 @@ describe("AuthProvider", () => {
       userCredentialMock
     );
 
-    let contextValue: any;
+    let contextValue: AuthContextType | undefined;
     render(
       <AuthProvider>
         <AuthContext.Consumer>
@@ -110,9 +109,11 @@ describe("AuthProvider", () => {
       </AuthProvider>
     );
 
-    let result;
+    let result: UserCredential | undefined;
     await act(async () => {
-      result = await contextValue.register("test@example.com", "123456");
+      if (contextValue) {
+        result = await contextValue.register("test@example.com", "123456");
+      }
     });
 
     expect(result).toBe(userCredentialMock);
@@ -126,7 +127,7 @@ describe("AuthProvider", () => {
   it("loginWithProvider chama signInWithPopup para Google e Facebook", async () => {
     (signInWithPopup as jest.Mock).mockResolvedValue({});
 
-    let contextValue: any;
+    let contextValue: AuthContextType | undefined;
     render(
       <AuthProvider>
         <AuthContext.Consumer>
@@ -140,14 +141,14 @@ describe("AuthProvider", () => {
 
     // Google
     await act(async () => {
-      await contextValue.loginWithProvider("Google");
+      if (contextValue) await contextValue.loginWithProvider("Google");
     });
     expect(GoogleAuthProvider).toHaveBeenCalled();
     expect(signInWithPopup).toHaveBeenCalled();
 
     // Facebook
     await act(async () => {
-      await contextValue.loginWithProvider("Facebook");
+      if (contextValue) await contextValue.loginWithProvider("Facebook");
     });
     expect(FacebookAuthProvider).toHaveBeenCalled();
     expect(signInWithPopup).toHaveBeenCalledTimes(2);

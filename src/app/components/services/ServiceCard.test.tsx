@@ -1,20 +1,27 @@
 // src/components/services/ServiceCard.test.tsx
 
-import React from "react";
+import React, { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
 import { render, screen } from "@testing-library/react";
 import { ServiceCard } from "./ServiceCard";
 
-// Mock dos estilos (styled-components)
+// 🔹 Mock dos estilos (styled-components)
+interface StyledProps extends HTMLAttributes<HTMLElement> {
+  children?: ReactNode;
+}
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: ReactNode;
+}
+
 jest.mock("./ServiceCard.styles", () => ({
-  CardWrapper: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  CardTitle: ({ children, ...props }: any) => <h2 {...props}>{children}</h2>,
-  CardDescription: ({ children, ...props }: any) => <p {...props}>{children}</p>,
-  CardButton: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+  CardWrapper: ({ children, ...props }: StyledProps) => <div role="article" {...props}>{children}</div>,
+  CardTitle: ({ children, ...props }: StyledProps) => <h2 {...props}>{children}</h2>,
+  CardDescription: ({ children, ...props }: StyledProps) => <p {...props}>{children}</p>,
+  CardButton: ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>,
 }));
 
-// Mock do Link do Next.js
+// 🔹 Mock do Link do Next.js
 jest.mock("next/link", () => {
-  return ({ children, href }: any) => <a href={href}>{children}</a>;
+  return ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>;
 });
 
 describe("ServiceCard Component", () => {
@@ -43,7 +50,7 @@ describe("ServiceCard Component", () => {
   });
 
   it("usa link padrão '/' quando não fornecido", () => {
-    const { rerender } = render(<ServiceCard {...props} link={undefined} />);
+    render(<ServiceCard {...props} link={undefined} />);
     const button = screen.getByRole("button", { name: /saiba mais/i });
     expect(button.closest("a")).toHaveAttribute("href", "/");
   });

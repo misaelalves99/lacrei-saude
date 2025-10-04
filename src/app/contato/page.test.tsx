@@ -1,6 +1,6 @@
 // src/app/contato/page.test.tsx
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
 import ContatosPage from "./page";
 
@@ -17,11 +17,16 @@ jest.mock("../components/contact/ContactCards", () => ({
   ContactCards: () => <div data-testid="contact-cards">ContactCards</div>,
 }));
 
+// 🔹 Tipagem para mocks de styled-components
+interface StyledMockProps {
+  children?: ReactNode;
+}
+
 // Mock dos estilos (styled-components)
 jest.mock("../contato/ContactPageWrapper.styles", () => ({
-  ContactPageWrapper: ({ children }: any) => <section>{children}</section>,
-  PageTitle: ({ children }: any) => <h2>{children}</h2>,
-  PageSubtitle: ({ children }: any) => <p>{children}</p>,
+  ContactPageWrapper: ({ children }: StyledMockProps) => <section>{children}</section>,
+  PageTitle: ({ children }: StyledMockProps) => <h2>{children}</h2>,
+  PageSubtitle: ({ children }: StyledMockProps) => <p>{children}</p>,
 }));
 
 describe("ContatosPage Component", () => {

@@ -1,25 +1,61 @@
-// src/components/contact/ContactForm.test.tsx
+// src/app/components/contact/ContactForm.test.tsx
 
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { ContactForm } from "./ContactForm";
 
+// --------------------
 // Mock dos estilos (styled-components)
-jest.mock("./ContactForm.styles", () => ({
-  Form: ({ children, ...props }: any) => <form {...props}>{children}</form>,
-  Label: ({ children, ...props }: any) => <label {...props}>{children}</label>,
-  Input: (props: any) => <input {...props} />,
-  TextArea: (props: any) => <textarea {...props} />,
-  SubmitButton: ({ children, ...props }: any) => (
-    <button {...props}>{children}</button>
-  ),
-  SuccessMessage: ({ children, ...props }: any) => (
-    <div {...props}>{children}</div>
-  ),
-  ErrorMessage: ({ children, ...props }: any) => (
-    <div {...props}>{children}</div>
-  ),
-}));
+// --------------------
+// Usamos React.createElement para evitar SyntaxError de JSX
+jest.mock("./ContactForm.styles", () => {
+  const React = require("react");
+  return {
+    Form: (props: React.FormHTMLAttributes<HTMLFormElement>) =>
+      React.createElement("form", props, props.children),
+
+    Label: (props: React.LabelHTMLAttributes<HTMLLabelElement>) =>
+      React.createElement("label", props, props.children),
+
+    Input: (props: React.InputHTMLAttributes<HTMLInputElement>) =>
+      React.createElement("input", props),
+
+    TextArea: (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) =>
+      React.createElement("textarea", props),
+
+    SubmitButton: (props: React.ButtonHTMLAttributes<HTMLButtonElement>) =>
+      React.createElement("button", props, props.children),
+
+    SuccessMessage: (props: React.HTMLAttributes<HTMLDivElement>) =>
+      React.createElement("div", props, props.children),
+
+    ErrorMessage: (props: React.HTMLAttributes<HTMLDivElement>) =>
+      React.createElement("div", props, props.children),
+  };
+});
+
+// --------------------
+// Helper para mockar fetch como Response válido
+// --------------------
+const mockResponse = (success: boolean): Response =>
+  ({
+    ok: success,
+    status: success ? 200 : 400,
+    json: async () => ({ success }),
+    headers: new Headers(),
+    redirected: false,
+    type: "basic",
+    url: "",
+    clone: function (): Response {
+      return this;
+    },
+    body: null,
+    bodyUsed: false,
+    arrayBuffer: async () => new ArrayBuffer(0),
+    blob: async () => new Blob(),
+    formData: async () => new FormData(),
+    text: async () => "",
+  } as Response);
 
 describe("ContactForm Component", () => {
   beforeEach(() => {
@@ -30,32 +66,34 @@ describe("ContactForm Component", () => {
     render(<ContactForm />);
 
     expect(
-      screen.getByRole("form", { name: /formulário de contato da lacrei saúde/i })
+      screen.getByRole("form", {
+        name: /formulário de contato da lacrei saúde/i,
+      })
     ).toBeInTheDocument();
 
     expect(screen.getByLabelText(/nome/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/e-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/mensagem/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /enviar/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /enviar/i })
+    ).toBeInTheDocument();
   });
 
   it("envia o formulário com sucesso", async () => {
-    (global as any).fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({ success: true }),
-      })
-    );
+    global.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(true))
+    ) as jest.Mock;
 
     render(<ContactForm />);
 
     fireEvent.change(screen.getByLabelText(/nome/i), {
-      target: { value: "Misael", name: "name" },
+      target: { value: "Misael" },
     });
     fireEvent.change(screen.getByLabelText(/e-mail/i), {
-      target: { value: "teste@teste.com", name: "email" },
+      target: { value: "teste@teste.com" },
     });
     fireEvent.change(screen.getByLabelText(/mensagem/i), {
-      target: { value: "Olá, mensagem de teste!", name: "message" },
+      target: { value: "Olá, mensagem de teste!" },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
@@ -66,29 +104,31 @@ describe("ContactForm Component", () => {
       ).toBeInTheDocument()
     );
 
-    // Verifica se os campos foram limpos
+    // Valida se limpou os campos
     expect((screen.getByLabelText(/nome/i) as HTMLInputElement).value).toBe("");
-    expect((screen.getByLabelText(/e-mail/i) as HTMLInputElement).value).toBe("");
-    expect((screen.getByLabelText(/mensagem/i) as HTMLTextAreaElement).value).toBe("");
+    expect((screen.getByLabelText(/e-mail/i) as HTMLInputElement).value).toBe(
+      ""
+    );
+    expect(
+      (screen.getByLabelText(/mensagem/i) as HTMLTextAreaElement).value
+    ).toBe("");
   });
 
   it("exibe mensagem de erro quando a API falha", async () => {
-    (global as any).fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({ success: false }),
-      })
-    );
+    global.fetch = jest.fn(() =>
+      Promise.resolve(mockResponse(false))
+    ) as jest.Mock;
 
     render(<ContactForm />);
 
     fireEvent.change(screen.getByLabelText(/nome/i), {
-      target: { value: "Misael", name: "name" },
+      target: { value: "Misael" },
     });
     fireEvent.change(screen.getByLabelText(/e-mail/i), {
-      target: { value: "teste@teste.com", name: "email" },
+      target: { value: "teste@teste.com" },
     });
     fireEvent.change(screen.getByLabelText(/mensagem/i), {
-      target: { value: "Erro teste", name: "message" },
+      target: { value: "Erro teste" },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
@@ -101,18 +141,20 @@ describe("ContactForm Component", () => {
   });
 
   it("exibe mensagem de erro quando ocorre exceção no fetch", async () => {
-    (global as any).fetch = jest.fn(() => Promise.reject("API offline"));
+    global.fetch = jest.fn(() =>
+      Promise.reject(new Error("API offline"))
+    ) as jest.Mock;
 
     render(<ContactForm />);
 
     fireEvent.change(screen.getByLabelText(/nome/i), {
-      target: { value: "Misael", name: "name" },
+      target: { value: "Misael" },
     });
     fireEvent.change(screen.getByLabelText(/e-mail/i), {
-      target: { value: "teste@teste.com", name: "email" },
+      target: { value: "teste@teste.com" },
     });
     fireEvent.change(screen.getByLabelText(/mensagem/i), {
-      target: { value: "Mensagem erro", name: "message" },
+      target: { value: "Mensagem erro" },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
@@ -124,40 +166,43 @@ describe("ContactForm Component", () => {
     );
   });
 
-  it("desabilita o botão durante o envio", async () => {
-    let resolveFetch: Function;
-    (global as any).fetch = jest.fn(
+  it("desabilita o botão durante o envio e reabilita após resposta", async () => {
+    let resolveFetch: (() => void) | undefined;
+
+    global.fetch = jest.fn(
       () =>
-        new Promise((resolve) => {
-          resolveFetch = () =>
-            resolve({ json: () => Promise.resolve({ success: true }) });
+        new Promise<Response>((resolve) => {
+          resolveFetch = () => resolve(mockResponse(true));
         })
-    );
+    ) as jest.Mock;
 
     render(<ContactForm />);
 
     fireEvent.change(screen.getByLabelText(/nome/i), {
-      target: { value: "Teste", name: "name" },
+      target: { value: "Teste" },
     });
     fireEvent.change(screen.getByLabelText(/e-mail/i), {
-      target: { value: "teste@teste.com", name: "email" },
+      target: { value: "teste@teste.com" },
     });
     fireEvent.change(screen.getByLabelText(/mensagem/i), {
-      target: { value: "Teste mensagem", name: "message" },
+      target: { value: "Teste mensagem" },
     });
 
     fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
 
-    // Botão deve estar desabilitado enquanto o fetch não resolve
+    // Botão deve estar desabilitado
     expect(screen.getByRole("button")).toBeDisabled();
 
-    // Resolve manualmente o fetch
-    resolveFetch!();
+    // Simula resposta da API
+    if (resolveFetch) resolveFetch();
 
     await waitFor(() =>
       expect(
         screen.getByText(/✅ mensagem enviada com sucesso!/i)
       ).toBeInTheDocument()
     );
+
+    // Botão volta a habilitar
+    expect(screen.getByRole("button")).not.toBeDisabled();
   });
 });

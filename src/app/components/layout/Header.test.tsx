@@ -1,15 +1,15 @@
 // src/components/layout/Header.test.tsx
 
-import React from "react";
+import React, { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import HeaderComponent from "./Header";
 import '@testing-library/jest-dom';
 
 // 🔹 Mock next/link
-jest.mock("next/link", () => ({ children, href }: any) => <a href={href}>{children}</a>);
+jest.mock("next/link", () => ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>);
 
 // 🔹 Mock next/image
-jest.mock("next/image", () => (props: any) => <img {...props} alt={props.alt} />);
+jest.mock("next/image", () => ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />);
 
 // 🔹 Mock useAuth
 const mockLogout = jest.fn();
@@ -21,19 +21,31 @@ jest.mock("../../hooks/useAuth", () => ({
 }));
 
 // 🔹 Mock styled-components
+interface StyledProps extends HTMLAttributes<HTMLElement> {
+  children?: ReactNode;
+}
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: ReactNode;
+}
+interface MobilePanelProps extends StyledProps {
+  open?: boolean;
+}
+
 jest.mock("./Header.styles", () => ({
-  HeaderContainer: ({ children, ...props }: any) => <div data-testid="header" {...props}>{children}</div>,
-  HeaderInner: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Brand: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  Nav: ({ children, ...props }: any) => <nav {...props}>{children}</nav>,
-  List: ({ children, ...props }: any) => <ul {...props}>{children}</ul>,
-  Item: ({ children, ...props }: any) => <li {...props}>{children}</li>,
-  NavLink: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-  UserButton: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-  UserMenu: ({ children, ...props }: any) => <div data-testid="user-menu" {...props}>{children}</div>,
-  UserMenuItem: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-  MenuButton: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-  MobilePanel: ({ children, open, ...props }: any) => <div data-testid="mobile-menu" data-open={open} {...props}>{children}</div>,
+  HeaderContainer: ({ children, ...props }: StyledProps) => <div data-testid="header" {...props}>{children}</div>,
+  HeaderInner: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
+  Brand: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
+  Nav: ({ children, ...props }: StyledProps) => <nav {...props}>{children}</nav>,
+  List: ({ children, ...props }: StyledProps) => <ul {...props}>{children}</ul>,
+  Item: ({ children, ...props }: StyledProps) => <li {...props}>{children}</li>,
+  NavLink: ({ children, ...props }: StyledProps) => <span {...props}>{children}</span>,
+  UserButton: ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>,
+  UserMenu: ({ children, ...props }: StyledProps) => <div data-testid="user-menu" {...props}>{children}</div>,
+  UserMenuItem: ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>,
+  MenuButton: ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>,
+  MobilePanel: ({ children, open, ...props }: MobilePanelProps) => (
+    <div data-testid="mobile-menu" data-open={open} {...props}>{children}</div>
+  ),
 }));
 
 describe("HeaderComponent", () => {
@@ -68,7 +80,6 @@ describe("HeaderComponent", () => {
     expect(within(userMenu).getByText("Sair")).toBeInTheDocument();
 
     fireEvent.click(userButton);
-    // Aqui você pode checar se o menu foi escondido via data-open ou estilo
     expect(userMenu).not.toBeVisible();
   });
 
@@ -94,7 +105,6 @@ describe("HeaderComponent", () => {
     expect(within(mobileMenu).getByText("Serviços")).toBeInTheDocument();
 
     fireEvent.click(menuButton);
-    // ainda renderiza, mas o open deve estar false
     expect(mobileMenu).toHaveAttribute("data-open", "false");
   });
 

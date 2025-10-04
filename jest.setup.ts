@@ -1,8 +1,6 @@
-// jest.setup.ts
-
 import "@testing-library/jest-dom";
 
-// Mock next/navigation
+// Mock do Next.js navigation
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
     push: jest.fn(),
@@ -11,7 +9,7 @@ jest.mock("next/navigation", () => ({
   }),
 }));
 
-// Mock next/image
+// Mock do next/image
 import React from "react";
 jest.mock("next/image", () => ({
   __esModule: true,

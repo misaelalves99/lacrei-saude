@@ -1,12 +1,18 @@
 // src/components/services/ServicesGrid.test.tsx
 
-import React from "react";
+import React, { ReactNode, HTMLAttributes } from "react";
 import { render, screen } from "@testing-library/react";
 import { ServicesGrid } from "./ServicesGrid";
 
-// Mock do ServiceCard para simplificar o teste
+// 🔹 Mock do ServiceCard para simplificar o teste
+interface ServiceCardProps {
+  title: string;
+  description: string;
+  icon: ReactNode;
+}
+
 jest.mock("./ServiceCard", () => ({
-  ServiceCard: ({ title, description, icon }: any) => (
+  ServiceCard: ({ title, description, icon }: ServiceCardProps) => (
     <div data-testid="service-card">
       <span data-testid="icon">{icon}</span>
       <h2>{title}</h2>
@@ -15,9 +21,13 @@ jest.mock("./ServiceCard", () => ({
   ),
 }));
 
-// Mock dos estilos (styled-components)
+// 🔹 Mock dos estilos (styled-components)
+interface StyledProps extends HTMLAttributes<HTMLElement> {
+  children?: ReactNode;
+}
+
 jest.mock("./ServicesGrid.styles", () => ({
-  GridWrapper: ({ children }: any) => <div>{children}</div>,
+  GridWrapper: ({ children }: StyledProps) => <div>{children}</div>,
 }));
 
 describe("ServicesGrid Component", () => {

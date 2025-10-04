@@ -1,13 +1,18 @@
 // src/components/ui/AccessibleButton.test.tsx
 
-import React from "react";
+import React, { ReactNode, ButtonHTMLAttributes } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { AccessibleButton } from "./AccessibleButton";
 import '@testing-library/jest-dom';
 
-// Mock do ButtonStyled para ignorar styled-components e theme
+// 🔹 Tipagem para o mock do botão
+interface MockButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: ReactNode;
+}
+
+// 🔹 Mock do ButtonStyled para ignorar styled-components
 jest.mock("./AccessibleButton.styles", () => ({
-  ButtonStyled: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+  ButtonStyled: ({ children, ...props }: MockButtonProps) => <button {...props}>{children}</button>,
 }));
 
 describe("AccessibleButton component", () => {

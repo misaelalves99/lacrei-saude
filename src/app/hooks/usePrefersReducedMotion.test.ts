@@ -4,7 +4,7 @@ import { renderHook, act } from "@testing-library/react";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 
 describe("usePrefersReducedMotion hook", () => {
-  let listeners: Record<string, (event: MediaQueryListEvent) => void> = {};
+  const listeners: Record<string, (event: MediaQueryListEvent) => void> = {};
   let addEventListenerMock: jest.Mock;
   let removeEventListenerMock: jest.Mock;
 

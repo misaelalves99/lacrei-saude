@@ -8,11 +8,15 @@ import { theme }  from "../styles/theme";
 
 // Mocks dos componentes internos
 jest.mock("../components/services/ServicesHero", () => ({
-  ServicesHero: () => <div data-testid="services-hero">ServicesHero Mock</div>,
+  ServicesHero: (props: React.PropsWithChildren<{}>) => (
+    <div data-testid="services-hero">ServicesHero Mock</div>
+  ),
 }));
 
 jest.mock("../components/services/ServicesGrid", () => ({
-  ServicesGrid: () => <div data-testid="services-grid">ServicesGrid Mock</div>,
+  ServicesGrid: (props: React.PropsWithChildren<{}>) => (
+    <div data-testid="services-grid">ServicesGrid Mock</div>
+  ),
 }));
 
 describe("ServicesPage", () => {

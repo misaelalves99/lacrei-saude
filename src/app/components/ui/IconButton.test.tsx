@@ -1,14 +1,22 @@
 // src/components/ui/IconButton.test.tsx
 
-import React from "react";
+import React, { ReactNode, ButtonHTMLAttributes, HTMLAttributes } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { IconButton } from "./IconButton";
 import '@testing-library/jest-dom';
 
-// Mock do styled-components para ignorar theme
+// 🔹 Tipagens para os mocks
+interface MockButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: ReactNode;
+}
+interface MockSpanProps extends HTMLAttributes<HTMLSpanElement> {
+  children?: ReactNode;
+}
+
+// 🔹 Mock do styled-components
 jest.mock("./IconButton.styles", () => ({
-  ButtonStyled: ({ children, ...props }: any) => <button {...props}>{children}</button>,
-  IconWrapper: ({ children }: any) => <span>{children}</span>,
+  ButtonStyled: ({ children, ...props }: MockButtonProps) => <button {...props}>{children}</button>,
+  IconWrapper: ({ children, ...props }: MockSpanProps) => <span {...props}>{children}</span>,
 }));
 
 describe("IconButton component", () => {

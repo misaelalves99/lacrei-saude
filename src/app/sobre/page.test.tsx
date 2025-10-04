@@ -1,6 +1,6 @@
 // src/app/sobre/page.test.tsx
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
 import AboutPage from "./page";
 import { ThemeProvider } from "styled-components";
@@ -11,8 +11,14 @@ jest.mock("../components/about/AboutHero", () => ({
   AboutHero: () => <div data-testid="about-hero">AboutHero Mock</div>,
 }));
 
+interface AboutSectionProps {
+  title: string;
+  subtitle: string;
+  children?: ReactNode;
+}
+
 jest.mock("../components/about/AboutSection", () => ({
-  AboutSection: ({ title, subtitle, children }: any) => (
+  AboutSection: ({ title, subtitle, children }: AboutSectionProps) => (
     <div data-testid={`about-section-${title}`}>
       <h2>{title}</h2>
       <p>{subtitle}</p>
