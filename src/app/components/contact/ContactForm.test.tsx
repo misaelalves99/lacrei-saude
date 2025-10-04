@@ -1,6 +1,6 @@
 // src/app/components/contact/ContactForm.test.tsx
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { ContactForm } from "./ContactForm";
 
@@ -8,29 +8,24 @@ import { ContactForm } from "./ContactForm";
 // Mock dos estilos (styled-components)
 // --------------------
 // Usamos React.createElement para evitar SyntaxError de JSX
+// 🔹 Mock dos estilos (styled-components) usando import ESModules
 jest.mock("./ContactForm.styles", () => {
-  const React = require("react");
+  const { createElement } = require("react"); // ⚠ ainda é necessário se quiser usar createElement
   return {
-    Form: (props: React.FormHTMLAttributes<HTMLFormElement>) =>
-      React.createElement("form", props, props.children),
-
-    Label: (props: React.LabelHTMLAttributes<HTMLLabelElement>) =>
-      React.createElement("label", props, props.children),
-
+    Form: (props: React.FormHTMLAttributes<HTMLFormElement> & { children?: ReactNode }) =>
+      createElement("form", props, props.children),
+    Label: (props: React.LabelHTMLAttributes<HTMLLabelElement> & { children?: ReactNode }) =>
+      createElement("label", props, props.children),
     Input: (props: React.InputHTMLAttributes<HTMLInputElement>) =>
-      React.createElement("input", props),
-
+      createElement("input", props),
     TextArea: (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) =>
-      React.createElement("textarea", props),
-
-    SubmitButton: (props: React.ButtonHTMLAttributes<HTMLButtonElement>) =>
-      React.createElement("button", props, props.children),
-
-    SuccessMessage: (props: React.HTMLAttributes<HTMLDivElement>) =>
-      React.createElement("div", props, props.children),
-
-    ErrorMessage: (props: React.HTMLAttributes<HTMLDivElement>) =>
-      React.createElement("div", props, props.children),
+      createElement("textarea", props),
+    SubmitButton: (props: React.ButtonHTMLAttributes<HTMLButtonElement> & { children?: ReactNode }) =>
+      createElement("button", props, props.children),
+    SuccessMessage: (props: React.HTMLAttributes<HTMLDivElement> & { children?: ReactNode }) =>
+      createElement("div", props, props.children),
+    ErrorMessage: (props: React.HTMLAttributes<HTMLDivElement> & { children?: ReactNode }) =>
+      createElement("div", props, props.children),
   };
 });
 
