@@ -12,34 +12,33 @@ interface StyledProps extends HTMLAttributes<HTMLElement> {
 
 // 🔹 Mock do next/image
 jest.mock("next/image", () => {
-  const React = require("react");
-  const NextImage = ({ src, alt, ...props }: { src: string; alt: string; [key: string]: unknown }) => (
-    <img src={src} alt={alt} {...props} />
-  );
+  const NextImage: React.FC<{ src: string; alt: string; [key: string]: unknown }> = ({
+    src,
+    alt,
+    ...props
+  }) => <img src={src} alt={alt} {...props} />;
   NextImage.displayName = "NextImage";
   return { __esModule: true, default: NextImage };
 });
 
 // 🔹 Mock dos estilos (styled-components)
 jest.mock("./ContactHero.styles", () => {
-  const React = require("react");
-
-  const HeroWrapper = ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>;
+  const HeroWrapper: React.FC<StyledProps> = ({ children, ...props }) => <div {...props}>{children}</div>;
   HeroWrapper.displayName = "HeroWrapper";
 
-  const HeroContent = ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>;
+  const HeroContent: React.FC<StyledProps> = ({ children, ...props }) => <div {...props}>{children}</div>;
   HeroContent.displayName = "HeroContent";
 
-  const HeroText = ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>;
+  const HeroText: React.FC<StyledProps> = ({ children, ...props }) => <div {...props}>{children}</div>;
   HeroText.displayName = "HeroText";
 
-  const TitleHero = ({ children, ...props }: StyledProps) => <h1 {...props}>{children}</h1>;
+  const TitleHero: React.FC<StyledProps> = ({ children, ...props }) => <h1 {...props}>{children}</h1>;
   TitleHero.displayName = "TitleHero";
 
-  const SubtitleHero = ({ children, ...props }: StyledProps) => <p {...props}>{children}</p>;
+  const SubtitleHero: React.FC<StyledProps> = ({ children, ...props }) => <p {...props}>{children}</p>;
   SubtitleHero.displayName = "SubtitleHero";
 
-  const HeroImage = ({ src, alt, ...props }: { src: string; alt: string } & StyledProps) => (
+  const HeroImage: React.FC<{ src: string; alt: string } & StyledProps> = ({ src, alt, ...props }) => (
     <img src={src} alt={alt} {...props} />
   );
   HeroImage.displayName = "HeroImage";
@@ -59,9 +58,7 @@ describe("ContactHero Component", () => {
       )
     ).toBeInTheDocument();
 
-    const img = screen.getByRole("img", {
-      name: /pessoa utilizando computador para contato/i,
-    });
+    const img = screen.getByRole("img", { name: /pessoa utilizando computador para contato/i });
     expect(img).toHaveAttribute("src", "/assets/contact-hero.png");
     expect(img).toHaveAttribute("alt", "Pessoa utilizando computador para contato");
   });
