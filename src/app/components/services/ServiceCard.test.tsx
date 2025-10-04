@@ -13,6 +13,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 jest.mock("./ServiceCard.styles", () => {
+  const React = require("react");
+
   const CardWrapper = ({ children, ...props }: StyledProps) => (
     <div role="article" {...props}>{children}</div>
   );
@@ -32,7 +34,10 @@ jest.mock("./ServiceCard.styles", () => {
 
 // 🔹 Mock do Link do Next.js
 jest.mock("next/link", () => {
-  return ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>;
+  const React = require("react");
+  const LinkMock = ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>;
+  LinkMock.displayName = "Link";
+  return LinkMock;
 });
 
 describe("ServiceCard Component", () => {

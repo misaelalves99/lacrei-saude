@@ -9,16 +9,16 @@ interface StyledProps extends HTMLAttributes<HTMLElement> {
   children?: ReactNode;
 }
 
-// Mock dos estilos (styled-components + next/image)
+// 🔹 Mock dos estilos (styled-components)
 jest.mock("./ContactHero.styles", () => ({
   HeroWrapper: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
   HeroContent: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
   HeroText: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
   TitleHero: ({ children, ...props }: StyledProps) => <h1 {...props}>{children}</h1>,
   SubtitleHero: ({ children, ...props }: StyledProps) => <p {...props}>{children}</p>,
-  HeroImage: ({ src, alt, ...props }: { src: string; alt: string } & StyledProps) => (
-    <img src={src} alt={alt} {...props} />
-  ),
+
+  // 🔹 Mock do HeroImage para testes
+  HeroImage: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
 }));
 
 describe("ContactHero Component", () => {

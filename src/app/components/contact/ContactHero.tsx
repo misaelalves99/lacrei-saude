@@ -1,8 +1,9 @@
-// src/components/contact/ContactHero.tsx
+// src/app/components/contact/ContactHero.tsx
 
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import * as S from "./ContactHero.styles";
 
 interface ContactHeroProps {
@@ -25,7 +26,23 @@ export const ContactHero: React.FC<ContactHeroProps> = ({
           <S.TitleHero id="hero-title">{title}</S.TitleHero>
           <S.SubtitleHero>{subtitle}</S.SubtitleHero>
         </S.HeroText>
-        <S.HeroImage src={imageSrc} alt={imageAlt} width={500} height={400} />
+
+        {/* Usando Image do Next.js */}
+        <div style={{ flex: 1, minWidth: 300, display: "flex", justifyContent: "center" }}>
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            width={500}
+            height={400}
+            style={{
+              borderRadius: "12px",
+              objectFit: "cover",
+              maxWidth: "100%",
+              height: "auto",
+            }}
+            priority={false} // lazy loading por padrão
+          />
+        </div>
       </S.HeroContent>
     </S.HeroWrapper>
   );
