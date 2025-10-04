@@ -4,26 +4,24 @@ import React, { useContext } from "react";
 import { render, screen, act } from "@testing-library/react";
 import { AuthContext, AuthContextType } from "./AuthContext";
 import { AuthProvider } from "./AuthProvider";
-import type { UserCredential, Auth, NextOrObserver, User } from "firebase/auth";
+import type { UserCredential, User } from "firebase/auth";
 
 // 🔹 Mock completo do Firebase
-jest.mock("firebase/auth", () => {
-  return {
-    getAuth: jest.fn(() => ({})),
-    signInWithEmailAndPassword: jest.fn(),
-    createUserWithEmailAndPassword: jest.fn(),
-    signInWithPopup: jest.fn(),
-    signOut: jest.fn(),
-    onAuthStateChanged: jest.fn(
-      (auth: object, callback: (user: any | null) => void) => {
-        callback(null); // usuário inicial: null
-        return jest.fn(); // unsubscribe mock
-      }
-    ),
-    GoogleAuthProvider: jest.fn(),
-    FacebookAuthProvider: jest.fn(),
-  };
-});
+jest.mock("firebase/auth", () => ({
+  getAuth: jest.fn(() => ({})),
+  signInWithEmailAndPassword: jest.fn(),
+  createUserWithEmailAndPassword: jest.fn(),
+  signInWithPopup: jest.fn(),
+  signOut: jest.fn(),
+  onAuthStateChanged: jest.fn(
+    (_auth: object, callback: (user: User | null) => void) => {
+      callback(null); // usuário inicial: null
+      return jest.fn(); // unsubscribe mock
+    }
+  ),
+  GoogleAuthProvider: jest.fn(),
+  FacebookAuthProvider: jest.fn(),
+}));
 
 import {
   signInWithEmailAndPassword,
