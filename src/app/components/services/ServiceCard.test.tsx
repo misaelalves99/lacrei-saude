@@ -12,12 +12,23 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
 }
 
-jest.mock("./ServiceCard.styles", () => ({
-  CardWrapper: ({ children, ...props }: StyledProps) => <div role="article" {...props}>{children}</div>,
-  CardTitle: ({ children, ...props }: StyledProps) => <h2 {...props}>{children}</h2>,
-  CardDescription: ({ children, ...props }: StyledProps) => <p {...props}>{children}</p>,
-  CardButton: ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>,
-}));
+jest.mock("./ServiceCard.styles", () => {
+  const CardWrapper = ({ children, ...props }: StyledProps) => (
+    <div role="article" {...props}>{children}</div>
+  );
+  CardWrapper.displayName = "CardWrapper";
+
+  const CardTitle = ({ children, ...props }: StyledProps) => <h2 {...props}>{children}</h2>;
+  CardTitle.displayName = "CardTitle";
+
+  const CardDescription = ({ children, ...props }: StyledProps) => <p {...props}>{children}</p>;
+  CardDescription.displayName = "CardDescription";
+
+  const CardButton = ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>;
+  CardButton.displayName = "CardButton";
+
+  return { CardWrapper, CardTitle, CardDescription, CardButton };
+});
 
 // 🔹 Mock do Link do Next.js
 jest.mock("next/link", () => {

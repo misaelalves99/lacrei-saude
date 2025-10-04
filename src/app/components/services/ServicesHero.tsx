@@ -17,14 +17,14 @@ export const ServicesHero: React.FC = () => (
       </S.HeroText>
 
       <div style={{ flex: 1, minWidth: 300, display: "flex", justifyContent: "center" }}>
-        <Image
-          src="/assets/services-hero.png"
-          alt="Profissional de saúde atendendo paciente"
-          width={500}
-          height={400}
-          style={{ borderRadius: "12px", objectFit: "cover", maxWidth: "100%", height: "auto" }}
-          loading="lazy"
-        />
+      <Image
+        src="/assets/services-hero.png"
+        alt="Profissional de saúde atendendo paciente"
+        width={500}
+        height={400}
+        style={{ borderRadius: "12px", objectFit: "cover", maxWidth: "100%", height: "auto" }}
+        priority={false} // lazy é default
+      />
       </div>
     </S.HeroContent>
   </S.HeroWrapper>

@@ -5,17 +5,19 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import UserPanelLazy from "./UserPanelLazy";
 import "@testing-library/jest-dom";
 
-// 🔹 Mock do next/link corretamente com factory function
+// 🔹 Mock do next/link sem require()
 jest.mock("next/link", () => {
-  const React = require("react");
   const Link = ({ children, href }: { children: ReactNode; href: string }) => (
     <a href={href}>{children}</a>
   );
   Link.displayName = "Link";
-  return Link;
+  return {
+    __esModule: true,
+    default: Link,
+  };
 });
 
-// 🔹 Mock dos styled-components
+// 🔹 Mock dos styled-components sem require()
 interface StyledProps extends HTMLAttributes<HTMLElement> {
   children?: ReactNode;
 }
@@ -24,8 +26,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 jest.mock("./UserPanelLazy.styles", () => {
-  const React = require("react");
-
   const UserPanelContainer = ({ children, ...props }: StyledProps) => (
     <div role="menu" aria-label="Opções do usuário" {...props}>
       {children}
