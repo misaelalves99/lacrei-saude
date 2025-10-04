@@ -3,15 +3,28 @@
 import React, { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import HeaderComponent from "./Header";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
-// 🔹 Mock next/link
-jest.mock("next/link", () => ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>);
+// --------------------
+// 🔹 Mocks
+// --------------------
 
-// 🔹 Mock next/image
-jest.mock("next/image", () => ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />);
+// Mock next/link
+jest.mock("next/link", () => ({
+  __esModule: true,
+  default: ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>,
+}));
 
-// 🔹 Mock useAuth
+// Mock next/image
+jest.mock("next/image", () => ({
+  __esModule: true,
+  default: ({ src, alt }: { src: string; alt: string }) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt={alt} />
+  ),
+}));
+
+// Mock useAuth
 const mockLogout = jest.fn();
 jest.mock("../../hooks/useAuth", () => ({
   useAuth: () => ({
@@ -20,34 +33,31 @@ jest.mock("../../hooks/useAuth", () => ({
   }),
 }));
 
-// 🔹 Mock styled-components
-interface StyledProps extends HTMLAttributes<HTMLElement> {
-  children?: ReactNode;
-}
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children?: ReactNode;
-}
-interface MobilePanelProps extends StyledProps {
-  open?: boolean;
-}
+// Mock styled-components
+interface StyledProps extends HTMLAttributes<HTMLElement> { children?: ReactNode }
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> { children?: ReactNode }
+interface MobilePanelProps extends StyledProps { open?: boolean }
 
 jest.mock("./Header.styles", () => ({
-  HeaderContainer: ({ children, ...props }: StyledProps) => <div data-testid="header" {...props}>{children}</div>,
-  HeaderInner: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
-  Brand: ({ children, ...props }: StyledProps) => <div {...props}>{children}</div>,
-  Nav: ({ children, ...props }: StyledProps) => <nav {...props}>{children}</nav>,
-  List: ({ children, ...props }: StyledProps) => <ul {...props}>{children}</ul>,
-  Item: ({ children, ...props }: StyledProps) => <li {...props}>{children}</li>,
-  NavLink: ({ children, ...props }: StyledProps) => <span {...props}>{children}</span>,
-  UserButton: ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>,
-  UserMenu: ({ children, ...props }: StyledProps) => <div data-testid="user-menu" {...props}>{children}</div>,
-  UserMenuItem: ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>,
-  MenuButton: ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>,
-  MobilePanel: ({ children, open, ...props }: MobilePanelProps) => (
+  HeaderContainer: (({ children, ...props }: StyledProps) => <div data-testid="header" {...props}>{children}</div>) as React.FC<StyledProps>,
+  HeaderInner: (({ children, ...props }: StyledProps) => <div {...props}>{children}</div>) as React.FC<StyledProps>,
+  Brand: (({ children, ...props }: StyledProps) => <div {...props}>{children}</div>) as React.FC<StyledProps>,
+  Nav: (({ children, ...props }: StyledProps) => <nav {...props}>{children}</nav>) as React.FC<StyledProps>,
+  List: (({ children, ...props }: StyledProps) => <ul {...props}>{children}</ul>) as React.FC<StyledProps>,
+  Item: (({ children, ...props }: StyledProps) => <li {...props}>{children}</li>) as React.FC<StyledProps>,
+  NavLink: (({ children, ...props }: StyledProps) => <span {...props}>{children}</span>) as React.FC<StyledProps>,
+  UserButton: (({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>) as React.FC<ButtonProps>,
+  UserMenu: (({ children, ...props }: StyledProps) => <div data-testid="user-menu" {...props}>{children}</div>) as React.FC<StyledProps>,
+  UserMenuItem: (({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>) as React.FC<ButtonProps>,
+  MenuButton: (({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>) as React.FC<ButtonProps>,
+  MobilePanel: (({ children, open, ...props }: MobilePanelProps) => (
     <div data-testid="mobile-menu" data-open={open} {...props}>{children}</div>
-  ),
+  )) as React.FC<MobilePanelProps>,
 }));
 
+// --------------------
+// 🔹 Testes
+// --------------------
 describe("HeaderComponent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -75,7 +85,6 @@ describe("HeaderComponent", () => {
     const userButton = screen.getByLabelText("Menu do usuário");
 
     fireEvent.click(userButton);
-
     const userMenu = screen.getByTestId("user-menu");
     expect(within(userMenu).getByText("Sair")).toBeInTheDocument();
 

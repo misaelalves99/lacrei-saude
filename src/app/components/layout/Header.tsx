@@ -1,5 +1,4 @@
 // src/components/layout/Header.tsx
-
 "use client";
 
 import { useState, useEffect, useRef, memo } from "react";
@@ -8,18 +7,23 @@ import Image from "next/image";
 import * as S from "./Header.styles";
 import { useAuth } from "../../hooks/useAuth";
 
-const NAV_LINKS = [
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home" },
   { href: "/servicos", label: "Serviços" },
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },
 ];
 
-function HeaderComponent() {
+const HeaderComponent: React.FC = () => {
   const { user, logout } = useAuth();
-
   const [openMenu, setOpenMenu] = useState(false);
   const [openUser, setOpenUser] = useState(false);
+
   const menuRef = useRef<HTMLDivElement | null>(null);
   const userRef = useRef<HTMLDivElement | null>(null);
 
@@ -29,6 +33,7 @@ function HeaderComponent() {
       if (openMenu && menuRef.current && !menuRef.current.contains(e.target as Node)) setOpenMenu(false);
       if (openUser && userRef.current && !userRef.current.contains(e.target as Node)) setOpenUser(false);
     };
+
     document.addEventListener("mousedown", handleOutside);
     return () => document.removeEventListener("mousedown", handleOutside);
   }, [openMenu, openUser]);
@@ -41,6 +46,7 @@ function HeaderComponent() {
         setOpenUser(false);
       }
     };
+
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
   }, []);
@@ -97,10 +103,14 @@ function HeaderComponent() {
                     ) : (
                       <>
                         <Link href="/login" passHref legacyBehavior>
-                          <S.UserMenuItem as="a" onClick={() => setOpenUser(false)}>Login</S.UserMenuItem>
+                          <S.UserMenuItem as="a" onClick={() => setOpenUser(false)}>
+                            Login
+                          </S.UserMenuItem>
                         </Link>
                         <Link href="/register" passHref legacyBehavior>
-                          <S.UserMenuItem as="a" onClick={() => setOpenUser(false)}>Cadastrar</S.UserMenuItem>
+                          <S.UserMenuItem as="a" onClick={() => setOpenUser(false)}>
+                            Cadastrar
+                          </S.UserMenuItem>
                         </Link>
                       </>
                     )}
@@ -118,7 +128,7 @@ function HeaderComponent() {
             onClick={() => setOpenMenu((prev) => !prev)}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" />
             </svg>
           </S.MenuButton>
 
@@ -129,6 +139,7 @@ function HeaderComponent() {
                 <S.NavLink onClick={() => setOpenMenu(false)}>{link.label}</S.NavLink>
               </Link>
             ))}
+
             {/* Dropdown usuário mobile */}
             <S.NavLink as="div">
               {user ? (
@@ -136,10 +147,14 @@ function HeaderComponent() {
               ) : (
                 <>
                   <Link href="/login" passHref legacyBehavior>
-                    <S.UserMenuItem as="a" onClick={() => setOpenMenu(false)}>Login</S.UserMenuItem>
+                    <S.UserMenuItem as="a" onClick={() => setOpenMenu(false)}>
+                      Login
+                    </S.UserMenuItem>
                   </Link>
                   <Link href="/register" passHref legacyBehavior>
-                    <S.UserMenuItem as="a" onClick={() => setOpenMenu(false)}>Cadastrar</S.UserMenuItem>
+                    <S.UserMenuItem as="a" onClick={() => setOpenMenu(false)}>
+                      Cadastrar
+                    </S.UserMenuItem>
                   </Link>
                 </>
               )}
@@ -149,6 +164,8 @@ function HeaderComponent() {
       </S.HeaderInner>
     </S.HeaderContainer>
   );
-}
+};
+
+HeaderComponent.displayName = "HeaderComponent";
 
 export default memo(HeaderComponent);
