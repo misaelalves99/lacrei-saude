@@ -5,8 +5,10 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { Hero } from "./Hero";
 
 // 🔹 Mock do next/navigation
+const pushMock = jest.fn();
+
 jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
+  useRouter: () => ({ push: pushMock }),
 }));
 
 // 🔹 Mock do AccessibleButton
@@ -29,12 +31,8 @@ jest.mock("./Hero.styles", () => ({
 }));
 
 describe("Hero Component (Home)", () => {
-  const pushMock = jest.fn();
-
   beforeEach(() => {
     jest.clearAllMocks();
-    const useRouter = require("next/navigation").useRouter;
-    (useRouter as jest.Mock).mockReturnValue({ push: pushMock });
   });
 
   it("renderiza título, subtítulo e botões", () => {

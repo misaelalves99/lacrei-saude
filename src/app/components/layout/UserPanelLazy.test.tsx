@@ -3,11 +3,16 @@
 import React, { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import UserPanelLazy from "./UserPanelLazy";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
-// 🔹 Mock do next/link
+// 🔹 Mock do next/link corretamente com factory function
 jest.mock("next/link", () => {
-  return ({ children, href }: { children: ReactNode; href: string }) => <a href={href}>{children}</a>;
+  const React = require("react");
+  const Link = ({ children, href }: { children: ReactNode; href: string }) => (
+    <a href={href}>{children}</a>
+  );
+  Link.displayName = "Link";
+  return Link;
 });
 
 // 🔹 Mock dos styled-components
@@ -18,12 +23,23 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
 }
 
-jest.mock("./UserPanelLazy.styles", () => ({
-  UserPanelContainer: ({ children, ...props }: StyledProps) => (
-    <div role="menu" aria-label="Opções do usuário" {...props}>{children}</div>
-  ),
-  UserPanelLink: ({ children, ...props }: ButtonProps) => <button {...props}>{children}</button>,
-}));
+jest.mock("./UserPanelLazy.styles", () => {
+  const React = require("react");
+
+  const UserPanelContainer = ({ children, ...props }: StyledProps) => (
+    <div role="menu" aria-label="Opções do usuário" {...props}>
+      {children}
+    </div>
+  );
+  UserPanelContainer.displayName = "UserPanelContainer";
+
+  const UserPanelLink = ({ children, ...props }: ButtonProps) => (
+    <button {...props}>{children}</button>
+  );
+  UserPanelLink.displayName = "UserPanelLink";
+
+  return { UserPanelContainer, UserPanelLink };
+});
 
 describe("UserPanelLazy component", () => {
   const onCloseMock = jest.fn();

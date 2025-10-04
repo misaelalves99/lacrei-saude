@@ -4,9 +4,13 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CTASection } from "./CTASection";
 
-// 🔹 Mock do next/navigation
+// 🔹 Mock do next/navigation com jest
+const pushMock = jest.fn();
+
 jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
+  useRouter: () => ({
+    push: pushMock,
+  }),
 }));
 
 // 🔹 Mock do AccessibleButton
@@ -28,26 +32,19 @@ jest.mock("./CTASection.styles", () => ({
 }));
 
 describe("CTASection Component (Home)", () => {
-  const pushMock = jest.fn();
-
   beforeEach(() => {
     jest.clearAllMocks();
-    const useRouter = require("next/navigation").useRouter;
-    (useRouter as jest.Mock).mockReturnValue({ push: pushMock });
   });
 
   it("renderiza título e botão corretamente", () => {
     render(<CTASection />);
 
-    // Verifica wrapper
     const wrapper = screen.getByTestId("cta-wrapper");
     expect(wrapper).toBeInTheDocument();
 
-    // Verifica heading
     const heading = screen.getByRole("heading", { name: /pronto para dar o próximo passo\?/i });
     expect(heading).toBeInTheDocument();
 
-    // Verifica botão
     const button = screen.getByRole("button", { name: /criar conta/i });
     expect(button).toBeInTheDocument();
   });
