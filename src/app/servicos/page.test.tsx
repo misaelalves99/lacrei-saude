@@ -4,19 +4,15 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import ServicesPage from "./page";
 import { ThemeProvider } from "styled-components";
-import { theme }  from "../styles/theme";
+import { theme } from "../styles/theme";
 
-// Mocks dos componentes internos
+// 🔹 Mocks dos componentes internos
 jest.mock("../components/services/ServicesHero", () => ({
-  ServicesHero: (props: React.PropsWithChildren<{}>) => (
-    <div data-testid="services-hero">ServicesHero Mock</div>
-  ),
+  ServicesHero: () => <div data-testid="services-hero">ServicesHero Mock</div>,
 }));
 
 jest.mock("../components/services/ServicesGrid", () => ({
-  ServicesGrid: (props: React.PropsWithChildren<{}>) => (
-    <div data-testid="services-grid">ServicesGrid Mock</div>
-  ),
+  ServicesGrid: () => <div data-testid="services-grid">ServicesGrid Mock</div>,
 }));
 
 describe("ServicesPage", () => {
