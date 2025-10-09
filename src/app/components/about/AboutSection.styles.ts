@@ -52,7 +52,7 @@ export const ServicesGrid = styled.div`
 
 export const ServiceCard = styled.article`
   background: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.radius.lg};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   padding: 2rem;
   display: flex;

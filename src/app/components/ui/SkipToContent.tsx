@@ -1,14 +1,11 @@
 // src/components/ui/SkipToContent.tsx
 
-"use client";
-
 import React from "react";
-import { SkipLink } from "./SkipToContent.styles";
 
 export const SkipToContent: React.FC = () => {
   return (
-    <SkipLink href="#main-content">
-      Pular para o conteúdo principal
-    </SkipLink>
+    <a href="#main-content" id="skip-to-content" tabIndex={0}>
+      Pular para o Conteúdo Principal
+    </a>
   );
 };

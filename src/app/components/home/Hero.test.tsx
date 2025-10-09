@@ -1,8 +1,8 @@
-// src/components/home/Hero.test.tsx
+// src/app/components/home/Hero.test.tsx
 
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Hero } from "./Hero";
+import Hero from "./Hero";
 
 // 🔹 Mock do next/navigation
 const pushMock = jest.fn();

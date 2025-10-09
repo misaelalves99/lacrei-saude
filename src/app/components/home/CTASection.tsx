@@ -1,4 +1,4 @@
-// src/components/home/CTASection.tsx
+// src/app/components/home/CTASection.tsx
 
 "use client";
 

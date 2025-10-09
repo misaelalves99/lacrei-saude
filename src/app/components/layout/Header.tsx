@@ -3,7 +3,6 @@
 
 import { useState, useEffect, useRef, memo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import * as S from "./Header.styles";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -12,11 +11,10 @@ interface NavLink {
   label: string;
 }
 
+// LINKS PRINCIPAIS
 const NAV_LINKS: NavLink[] = [
-  { href: "/", label: "Home" },
-  { href: "/servicos", label: "Serviços" },
-  { href: "/sobre", label: "Sobre" },
-  { href: "/contato", label: "Contato" },
+  { href: "/quem-somos", label: "Quem Somos" },
+  { href: "/ajuda", label: "Ajuda" },
 ];
 
 const HeaderComponent: React.FC = () => {
@@ -30,10 +28,11 @@ const HeaderComponent: React.FC = () => {
   // Fechar menus ao clicar fora
   useEffect(() => {
     const handleOutside = (e: MouseEvent) => {
-      if (openMenu && menuRef.current && !menuRef.current.contains(e.target as Node)) setOpenMenu(false);
-      if (openUser && userRef.current && !userRef.current.contains(e.target as Node)) setOpenUser(false);
+      if (openMenu && menuRef.current && !menuRef.current.contains(e.target as Node))
+        setOpenMenu(false);
+      if (openUser && userRef.current && !userRef.current.contains(e.target as Node))
+        setOpenUser(false);
     };
-
     document.addEventListener("mousedown", handleOutside);
     return () => document.removeEventListener("mousedown", handleOutside);
   }, [openMenu, openUser]);
@@ -46,7 +45,6 @@ const HeaderComponent: React.FC = () => {
         setOpenUser(false);
       }
     };
-
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
   }, []);
@@ -56,13 +54,28 @@ const HeaderComponent: React.FC = () => {
     setOpenUser(false);
   };
 
+  // Retorna o primeiro nome do usuário
+  const getFirstName = () => {
+    if (!user?.displayName) return "Usuário";
+    return user.displayName.split(" ")[0];
+  };
+
   return (
     <S.HeaderContainer role="banner" aria-label="Cabeçalho da Lacrei Saúde">
       <S.HeaderInner>
         {/* LOGO */}
         <S.Brand>
           <Link href="/" aria-label="Lacrei Saúde — Início">
-            <Image src="/assets/logo.svg" alt="Lacrei Saúde" width={40} height={40} priority />
+            {/* Substituímos o componente Image pelo <img> nativo */}
+            <img
+              alt="Logo da Lacrei Saúde que redireciona para a página principal"
+              loading="lazy"
+              decoding="async"
+              width="187"
+              height="24"
+              style={{ color: "transparent" }}
+              src="/assets/header/logo_lacrei_desktop.7ae004ab.svg"
+            />
           </Link>
         </S.Brand>
 
@@ -80,21 +93,27 @@ const HeaderComponent: React.FC = () => {
             {/* MENU USUÁRIO */}
             <S.Item style={{ position: "relative" }}>
               <div ref={userRef}>
-                <S.UserButton
-                  aria-label="Menu do usuário"
+                <S.EnterButton
+                  aria-label="Menu de login ou usuário"
                   aria-haspopup="true"
                   aria-expanded={openUser}
                   onClick={() => setOpenUser((prev) => !prev)}
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 
-                         1.79-4 4 1.79 4 4 4zm0 2c-2.67 
-                         0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                      fill="currentColor"
-                    />
+                  {user ? getFirstName() : "Entrar"}
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ marginLeft: "4px" }}
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
-                </S.UserButton>
+                </S.EnterButton>
 
                 {openUser && (
                   <S.UserMenu role="menu">
@@ -102,14 +121,14 @@ const HeaderComponent: React.FC = () => {
                       <S.UserMenuItem onClick={handleLogout}>Sair</S.UserMenuItem>
                     ) : (
                       <>
-                        <Link href="/login" passHref legacyBehavior>
+                        <Link href="/auth/login-patient" passHref legacyBehavior>
                           <S.UserMenuItem as="a" onClick={() => setOpenUser(false)}>
-                            Login
+                            Paciente
                           </S.UserMenuItem>
                         </Link>
-                        <Link href="/register" passHref legacyBehavior>
+                        <Link href="/auth/login-professionals" passHref legacyBehavior>
                           <S.UserMenuItem as="a" onClick={() => setOpenUser(false)}>
-                            Cadastrar
+                            Profissional
                           </S.UserMenuItem>
                         </Link>
                       </>
@@ -128,7 +147,12 @@ const HeaderComponent: React.FC = () => {
             onClick={() => setOpenMenu((prev) => !prev)}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" />
+              <path
+                d="M4 6h16M4 12h16M4 18h16"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+              />
             </svg>
           </S.MenuButton>
 
@@ -141,19 +165,19 @@ const HeaderComponent: React.FC = () => {
             ))}
 
             {/* Dropdown usuário mobile */}
-            <S.NavLink as="div">
+            <S.NavLink as="div" style={{ borderBottom: "none" }}>
               {user ? (
-                <S.UserMenuItem onClick={handleLogout}>Sair</S.UserMenuItem>
+                <S.UserMenuItem onClick={handleLogout}>Sair ({getFirstName()})</S.UserMenuItem>
               ) : (
                 <>
-                  <Link href="/login" passHref legacyBehavior>
+                  <Link href="/auth/login-patient" passHref legacyBehavior>
                     <S.UserMenuItem as="a" onClick={() => setOpenMenu(false)}>
-                      Login
+                      Paciente
                     </S.UserMenuItem>
                   </Link>
-                  <Link href="/register" passHref legacyBehavior>
+                  <Link href="/auth/login-professionals" passHref legacyBehavior>
                     <S.UserMenuItem as="a" onClick={() => setOpenMenu(false)}>
-                      Cadastrar
+                      Profissional
                     </S.UserMenuItem>
                   </Link>
                 </>

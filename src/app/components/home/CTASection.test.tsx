@@ -1,4 +1,4 @@
-// src/components/home/CTASection.test.tsx
+// src/app/components/home/CTASection.test.tsx
 
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";

@@ -1,5 +1,4 @@
 // src/app/contexts/AuthContext.tsx
-
 "use client";
 
 import { createContext } from "react";
@@ -7,7 +6,7 @@ import { User, UserCredential } from "firebase/auth";
 
 // Tipagem do contexto
 export interface AuthContextType {
-  user: User | null;
+  user: User | null; // Usuário Firebase
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string) => Promise<UserCredential>;

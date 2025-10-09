@@ -14,7 +14,7 @@ export const AuthWrapper = styled.div`
 
 export const AuthCard = styled.div`
   background: ${({ theme }) => theme.colors.background};
-  border-radius: ${({ theme }) => theme.radius.lg};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
   padding: 2.5rem 2rem;
   width: 100%;
   max-width: 400px;
@@ -52,9 +52,9 @@ export const Input = styled.input<{ hasToggle?: boolean }>`
   padding: 0.75rem 1rem;
   padding-right: ${({ hasToggle }) => (hasToggle ? "2.5rem" : "1rem")};
   border: 1px solid #d1d5db;
-  border-radius: ${({ theme }) => theme.radius.md};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   font-size: 1rem;
-  font-family: ${({ theme }) => theme.fonts.body};
+  font-family: ${({ theme }) => theme.fonts.family};
   outline: none;
   width: 100%;
 
@@ -94,7 +94,7 @@ export const Button = styled.button`
   color: ${({ theme }) => theme.colors.white};
   font-weight: 600;
   border: none;
-  border-radius: ${({ theme }) => theme.radius.md};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   cursor: pointer;
   transition: background 0.3s ease;
 

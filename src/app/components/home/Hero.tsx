@@ -1,35 +1,51 @@
-// src/components/home/Hero.tsx
-
+// src/app/components/home/Hero.tsx
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
-import { HeroWrapper, Title, Subtitle, Actions } from "./Hero.styles";
-import { AccessibleButton } from "../ui/AccessibleButton";
+import Link from "next/link";
+import Button from "../ui/Button";
+import {
+  HeroSection,
+  HeroInner,
+  Content,
+  Title,
+  Description,
+  Actions,
+  HeroImageBackground,
+  ContentWrapper,
+} from "./Hero.styles";
 
-export const Hero: React.FC = () => {
-  const router = useRouter();
-
+const Hero: React.FC = () => {
   return (
-    <HeroWrapper role="region" aria-labelledby="hero-title">
-      <Title id="hero-title">Cuidados de saúde para todos</Title>
-      <Subtitle>
-        Garantimos que cada pessoa se sinta segura e acolhida ao buscar cuidado.
-      </Subtitle>
-      <Actions>
-        <AccessibleButton
-          label="Começar agora"
-          onClick={() => router.push("/servicos")}
-        />
-        <AccessibleButton
-          label="Saiba mais"
-          onClick={() => router.push("/sobre")}
-        />
-        <AccessibleButton
-          label="Contato"
-          onClick={() => router.push("/contato")}
-        />
-      </Actions>
-    </HeroWrapper>
+    <HeroSection>
+      <HeroImageBackground />
+
+      <ContentWrapper>
+        <HeroInner>
+          <Content>
+            <Title>Olá, você está na Lacrei Saúde!</Title>
+            <Description>
+              Conectamos pessoas LGBTQIAPN+ com profissionais de saúde
+              qualificados, proporcionando experiências de cuidado
+              seguras e inclusivas.
+            </Description>
+            <Actions>
+              <Link href="/auth/login-patient" passHref legacyBehavior>
+                <Button as="a" size="medium" variant="primary">
+                  Para pacientes
+                </Button>
+              </Link>
+              <Link href="/auth/login-professionals" passHref legacyBehavior>
+                <Button as="a" size="medium" variant="primary">
+                  Para profissionais
+                </Button>
+              </Link>
+            </Actions>
+          </Content>
+        </HeroInner>
+      </ContentWrapper>
+    </HeroSection>
   );
 };
+
+export default Hero;

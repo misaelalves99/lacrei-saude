@@ -17,7 +17,7 @@ export const ButtonStyled = styled.button`
   padding: 0.75rem 1.5rem;
 
   border: none;
-  border-radius: ${({ theme }) => theme.radius.md};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   cursor: pointer;
 
   transition: background-color 0.3s ease, transform 0.15s ease,

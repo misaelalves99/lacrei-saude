@@ -1,50 +1,56 @@
-// src/components/home/CTASection.styles.ts
+// src/app/components/home/CTASection.styles.ts
 
 "use client";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const CTAWrapper = styled.section`
-  text-align: center;
-  padding: 3.5rem 2rem;
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.radius.lg};
-  margin: 4rem auto;
-  max-width: 960px;
-  box-shadow: 0 10px 24px rgba(1, 131, 131, 0.3);
+  ${({ theme }) => css`
+    text-align: center;
+    padding: ${theme.spacings.xxl} ${theme.spacings.md};
+    background: ${theme.colors.primary};
+    color: ${theme.colors.white};
+    border-radius: ${theme.borderRadius.lg};
+    margin: ${theme.spacings.xxxl} auto;
+    max-width: 960px;
+    box-shadow: 0 10px 24px rgba(1, 131, 131, 0.3);
+    font-family: 'Nunito', sans-serif;
 
-  /* Animação suave de entrada */
-  opacity: 0;
-  transform: translateY(40px);
-  animation: fadeInUp 0.8s ease forwards;
+    /* Animação suave de entrada */
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 0.8s ease forwards;
 
-  @keyframes fadeInUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-  }
 
-  /* Responsividade */
-  @media (min-width: 768px) {
-    padding: 4.5rem 3rem;
-  }
+    /* Responsividade */
+    @media (min-width: ${theme.breakpoints.tablet}) {
+      padding: ${theme.spacings.xxxl} ${theme.spacings.lg};
+    }
 
-  @media (min-width: 1200px) {
-    padding: 5rem 4rem;
-  }
+    @media (min-width: ${theme.breakpoints.largeDesktop}) {
+      padding: ${theme.spacings.xxxl} ${theme.spacings.xl};
+    }
+  `}
 `;
 
 export const Title = styled.h2`
-  font-size: 1.75rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
-  line-height: 1.3;
+  ${({ theme }) => css`
+    font-family: 'Nunito', sans-serif;
+    font-size: ${theme.fonts.sizes.xl};
+    font-weight: ${theme.fonts.weights.bold};
+    margin-bottom: ${theme.spacings.xl};
+    line-height: 1.3;
 
-  @media (min-width: 768px) {
-    font-size: 2.25rem;
-  }
+    @media (min-width: ${theme.breakpoints.tablet}) {
+      font-size: ${theme.fonts.sizes.xxl};
+    }
+  `}
 `;
 
 export const Action = styled.div`
@@ -53,6 +59,8 @@ export const Action = styled.div`
 
   button {
     min-width: 180px;
-    font-size: 1.125rem;
+    font-size: ${props => props.theme.fonts.sizes.large};
+    font-family: 'Nunito', sans-serif;
+    font-weight: ${props => props.theme.fonts.weights.semibold};
   }
 `;

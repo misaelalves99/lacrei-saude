@@ -7,7 +7,7 @@ export const UserPanelContainer = styled.div`
   top: 100%;
   right: 0;
   background: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.radius.md};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   box-shadow: 0 8px 28px rgba(2,6,23,0.12);
   padding: 0.5rem 0;
   display: flex;

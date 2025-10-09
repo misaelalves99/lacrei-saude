@@ -1,5 +1,4 @@
 // src/app/contexts/AuthProvider.tsx
-
 "use client";
 
 import React, { useState, useEffect, ReactNode } from "react";
@@ -51,7 +50,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         email,
         password
       );
-      return userCredential; // ✅ Retorna UserCredential
+      return userCredential;
     } finally {
       setLoading(false);
     }
